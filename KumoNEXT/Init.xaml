@@ -8,8 +8,8 @@
         Title="启动中" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" Cursor="Wait">
     <Grid>
         <Image HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Source="Res/Launch.png"/>
-        <ProgressBar HorizontalAlignment="Center" Height="20" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="280" Foreground="#FF60FF7D" Background="#BFFFFFFF" BorderBrush="{x:Null}" IsIndeterminate="True" BorderThickness="0,0,0,0"/>
-        <Label Content="初始化配置..." HorizontalAlignment="Center" Margin="0,270,0,10" Width="280" FontFamily="DengXian Light" MaxHeight="20" Padding="5,1,5,0" HorizontalContentAlignment="Center" FontSize="18"/>
+        <ProgressBar x:Name="Progress" HorizontalAlignment="Center" Height="20" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="280" Foreground="#FF60FF7D" Background="#BFFFFFFF" BorderBrush="{x:Null}" IsIndeterminate="True" BorderThickness="0,0,0,0"/>
+        <Label x:Name="Description" Content="初始化配置..." HorizontalAlignment="Center" Margin="0,270,0,10" Width="280" FontFamily="DengXian Light" MaxHeight="20" Padding="5,1,5,0" HorizontalContentAlignment="Center" FontSize="18"/>
         
 
     </Grid>

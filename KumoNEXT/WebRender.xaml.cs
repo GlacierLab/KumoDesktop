@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Web.WebView2.Core;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace KumoNEXT
 {
@@ -19,9 +9,17 @@ namespace KumoNEXT
     /// </summary>
     public partial class WebRender : Window
     {
-        public WebRender()
+        public WebRender(string Config="{}")
         {
             InitializeComponent();
+            InitContent();
+        }
+        private async void InitContent()
+        {
+            await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
+            WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("545-local.qinlili.bid",
+         "C:\\QINLILI\\Dev\\545WebPlayer", CoreWebView2HostResourceAccessKind.DenyCors);
+            WebView.CoreWebView2.Navigate("https://545-local.qinlili.bid/index.html");
         }
     }
 }
