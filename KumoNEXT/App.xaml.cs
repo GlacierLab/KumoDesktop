@@ -1,7 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
-using System.Configuration;
-using System.Data;
-using System.Security.Permissions;
+using System.Reflection;
+using System.Text.Json;
 using System.Windows;
 
 namespace KumoNEXT
@@ -26,8 +25,22 @@ namespace KumoNEXT
         }
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public static void Main()
+        public static void Main(params string[] Args)
         {
+            //解析参数
+            var ParsedArgu = new Scheme.LaunchArgu();
+            Array.ForEach(Args, (string argu) => {
+                if (argu.StartsWith("--"))
+                {
+                    string[] parsed=argu.Substring(2).Split("=");
+                    PropertyInfo entry = ParsedArgu.GetType().GetProperty(parsed[0]);
+                    if (entry!=null)
+                    {
+                        entry.SetValue(ParsedArgu,parsed[1]);
+                    }
+                }
+            });
+            Console.WriteLine("Launch Argu:"+JsonSerializer.Serialize(ParsedArgu));
             KumoNEXT.App app = new KumoNEXT.App();
             app.InitializeComponent();
             app.Run();

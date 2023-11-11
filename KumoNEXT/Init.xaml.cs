@@ -41,7 +41,7 @@ namespace KumoNEXT
 #endif
             //初始化IPC服务进程
             Progress.Value = 70;
-            Description.Content = "准备IPC服务...";
+            Description.Content = "检查服务进程...";
 #if DEBUG
             await Task.Delay(200);
 #endif
@@ -58,6 +58,8 @@ namespace KumoNEXT
 #if DEBUG
             await Task.Delay(200);
 #endif
+            new WebRender().Show();
+            new WebRender().Show();
             new WebRender().Show();
             Progress.Value = 100;
             Description.Content = "准备就绪";

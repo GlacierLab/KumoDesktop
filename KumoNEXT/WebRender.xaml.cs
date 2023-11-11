@@ -17,9 +17,7 @@ namespace KumoNEXT
         private async void InitContent()
         {
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
-            WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("545-local.qinlili.bid",
-         "C:\\QINLILI\\Dev\\545WebPlayer", CoreWebView2HostResourceAccessKind.DenyCors);
-            WebView.CoreWebView2.Navigate("https://545-local.qinlili.bid/index.html");
+            WebView.CoreWebView2.Navigate("https://ctfile.qinlili.bid/");
         }
     }
 }

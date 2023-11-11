@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "KumoNEXT": {
+      "commandName": "Project",
+      "commandLineArgs": "--type=service"
+    }
+  }
+}

@@ -8,8 +8,14 @@ namespace KumoNEXT.Scheme
 {
     //包清单文件，描述包体信息
     //该文件与包版本绑定，不面向普通用户开放修改
-    public class PkgManifest
+    internal class PkgManifest
     {
+        //清单版本，用于向下兼容
+        public int ManifestVersion { get; set; } = 1;
+        //包名
+        public string Name { get; set; } = "CorePkg.TestPkg";
+        //作者
+        public string Author { get; set; } = "琴梨梨";
         //当前包数字版本
         public int PkgVersion { get; set; } = 0;
         //当前包所需最低的主程序版本，若主程序版本低于所需版本，会请求更新主程序
