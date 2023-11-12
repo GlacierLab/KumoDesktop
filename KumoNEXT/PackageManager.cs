@@ -8,7 +8,19 @@ namespace KumoNEXT
 {
     class PackageManager
     {
-        public static int Install(string PkgName,string Options = "{}")
+        public static int InstallFromOfficial(string PkgName)
+        {
+            return 0;
+        }
+        public static int InstallFromOnlineSource(string OnlineManifest)
+        {
+            return 0;
+        }
+        public static int InstallFromFile(string Path)
+        {
+            return 0;
+        }
+        public static int Update(string PkgName)
         {
             return 0;
         }

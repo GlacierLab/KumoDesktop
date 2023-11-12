@@ -1,4 +1,5 @@
 ﻿using Microsoft.Web.WebView2.Core;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -15,23 +16,30 @@ namespace KumoNEXT
 {
     public partial class Init : Window
     {
-        public Init(Scheme.LaunchArgu? Argu)
+        public Init()
         {
             InitializeComponent();
-            InitAsync(Argu);
+            InitAsync(App.ParsedArgu);
         }
-        private async void InitAsync(Scheme.LaunchArgu? Argu)
+        public void ChangeProgress(int Value,string Text)
         {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Progress.Value = Value;
+                Description.Content = Text;
+            }));
+        }
+        private async void InitAsync(Scheme.LaunchArgu Argu)
+        {
+
             Progress.IsIndeterminate = false;
             //解析启动参数
-            Progress.Value = 0;
-            Description.Content = "解析启动参数...";
+            ChangeProgress(0, "解析启动参数...");
 #if DEBUG
             await Task.Delay(200);
 #endif
             //检查是否存在必要的包
-            Progress.Value = 10;
-            Description.Content = "检查必要包体...";
+            ChangeProgress(10, "检查必要包体...");
             if (PackageManager.CheckInstall("CorePkg.Update") == 0)
             {
 
@@ -40,14 +48,19 @@ namespace KumoNEXT
             await Task.Delay(200);
 #endif
             //初始化IPC服务进程
-            Progress.Value = 70;
-            Description.Content = "检查服务进程...";
+            ChangeProgress(70, "检查服务进程...");
+            if (!File.Exists(@"\\.\pipe\KumoDesktop"))
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                Process.Start(Environment.ProcessPath, "--type=service");
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+            Service.ClientCore.Main();
 #if DEBUG
             await Task.Delay(200);
 #endif
             //初始化WebView组件
-            Progress.Value = 90;
-            Description.Content = "准备渲染器...";
+            ChangeProgress(90, "准备渲染器...");
             var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --disable-web-security --no-sandbox";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
@@ -61,8 +74,7 @@ namespace KumoNEXT
             new AppCore.WebRender().Show();
             new AppCore.WebRender().Show();
             new AppCore.WebRender().Show();
-            Progress.Value = 100;
-            Description.Content = "准备就绪";
+            ChangeProgress(100, "准备就绪");
             await Task.Delay(100);
             this.Close();
         }

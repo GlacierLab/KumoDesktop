@@ -1,56 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO.Pipes;
+using System.Reflection;
+using System.Windows.Threading;
 
 namespace KumoNEXT.Service
 {
     internal class ServiceCore
     {
+        public static int ActiveThreads = 0;
         public static void Main()
         {
+            Console.WriteLine("Launch Service...");
+            new Thread(ServerThread).Start();
         }
-    }
-    public class StreamString
-    {
-        private Stream ioStream;
-        private UnicodeEncoding streamEncoding;
-
-        public StreamString(Stream ioStream)
+        private static void ServerThread(object? data)
         {
-            this.ioStream = ioStream;
-            streamEncoding = new UnicodeEncoding();
-        }
-
-        public string ReadString()
-        {
-            int len = 0;
-
-            len = ioStream.ReadByte() * 256;
-            len += ioStream.ReadByte();
-            byte[] inBuffer = new byte[len];
-            ioStream.Read(inBuffer, 0, len);
-
-            return streamEncoding.GetString(inBuffer);
-        }
-
-        public int WriteString(string outString)
-        {
-            byte[] outBuffer = streamEncoding.GetBytes(outString);
-            int len = outBuffer.Length;
-            if (len > UInt16.MaxValue)
+            ActiveThreads++;
+            NamedPipeServerStream pipeServer = new NamedPipeServerStream("KumoDesktop", PipeDirection.InOut);
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+            pipeServer.WaitForConnection();
+            Console.WriteLine("Connected to Client thread[{0}].", threadId);
+            //新建线程等待新连接
+            //new Thread(ServerThread).Start();
+            try
             {
-                len = (int)UInt16.MaxValue;
+                StreamString ss = new StreamString(pipeServer);
+                ss.WriteString("KumoService");
+                string filename = ss.ReadString();
             }
-            ioStream.WriteByte((byte)(len / 256));
-            ioStream.WriteByte((byte)(len & 255));
-            ioStream.Write(outBuffer, 0, len);
-            ioStream.Flush();
+            catch (IOException e)
+            {
+                Console.WriteLine("Error: {0}", e.Message);
+            }
+            pipeServer.Close();
+            ActiveThreads--;
+            new Thread(CheckAutoExit).Start(); 
+        }
 
-            return outBuffer.Length + 2;
+        private static void CheckAutoExit()
+        {
+            Thread.Sleep(1000);
+            if(ActiveThreads == 0)
+            {
+                Console.WriteLine("Exit Service");
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    App.Current.Shutdown();
+                });
+            }
         }
     }
+
 
 }
