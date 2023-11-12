@@ -23,7 +23,7 @@ namespace KumoNEXT.Scheme
         //默认启动包名，即直接运行时启动的包
         public string LaunchPkg { get; set; } = "CorePkg.Main.UI";
         //核心包依赖
-        public string[] RequirePkg { get; set; } = { "CorePkg.Main.UI", "CorePkg.Main.Data", "CorePkg.Update" };
+        public string[] RequirePkg { get; set; } = { "CorePkg.Main", "CorePkg.Main.Data", "CorePkg.Update" };
 
         //调试模式是否开启
         public Boolean EnableDebug { get; set; } = false;

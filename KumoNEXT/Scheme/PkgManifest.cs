@@ -27,5 +27,11 @@ namespace KumoNEXT.Scheme
         //1-标准安全措施，适用于大部分扩展包，无进程/目录隔离，启用沙盒，禁止跨域，调用受限API需请求权限
         //2-严格安全措施，适用于对安全要求较高的扩展包，进程/目录隔离，启用沙盒，禁止跨域，禁止调用本地API
         public int SecurityLevel { get; set; } = 2;
+        //权限列表，请求此列表外的权限会被忽略
+        public string[] Permissions { get; set; } = { };
+        //依赖包名，安装依赖包后再安装此包
+        public string[] Dependency { get; set; } = { };
+        //扩展子包，仅本名单内的扩展包允许安装文件到目录下
+        public string[] ChildPkg { get; set; } = { };
     }
 }

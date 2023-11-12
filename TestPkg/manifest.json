@@ -1,0 +1,14 @@
+{
+    "ManifestVersion": 1,
+    "Name": "CorePkg.TestPkg",
+    "Author": "琴梨梨",
+    "PkgVersion": 1,
+    "RequireVersion": 100,
+    "Server": "https://github.com/GlacierLab/KumoDesktop/releases/tag/",
+    "SecurityLevel": 0,
+    "Permissions": [
+        "ReadFile",
+        "WriteFile",
+        "Execute"
+    ]
+}
