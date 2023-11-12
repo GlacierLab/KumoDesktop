@@ -8,7 +8,7 @@ namespace KumoNEXT.Scheme
 {
     //核心配置文件格式，可通过外部更新，默认使用内置值
     //该配置文件管理云酱运行时的参数，不面向普通用户开放，不可通过图形界面更改
-    internal class MainConfig
+    public class MainConfig
     {
         //[不可覆盖]当前主程序数字版本
         public  int RuntimeVersion { get;  } = 100;
@@ -26,7 +26,7 @@ namespace KumoNEXT.Scheme
         public string[] RequirePkg { get; set; } = { "CorePkg.Main", "CorePkg.Main.Data", "CorePkg.Update" };
 
         //调试模式是否开启
-        public Boolean EnableDebug { get; set; } = false;
+        public bool EnableDebug { get; set; } = false;
         //调试模式组件包名，此包无需授权即可调用特权API
         public string DebugPkg { get; set; } = "CorePkg.Debug";
     }

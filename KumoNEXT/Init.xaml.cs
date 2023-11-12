@@ -15,12 +15,12 @@ namespace KumoNEXT
 {
     public partial class Init : Window
     {
-        public Init()
+        public Init(Scheme.LaunchArgu? Argu)
         {
             InitializeComponent();
-            InitAsync();
+            InitAsync(Argu);
         }
-        private async void InitAsync()
+        private async void InitAsync(Scheme.LaunchArgu? Argu)
         {
             Progress.IsIndeterminate = false;
             //解析启动参数
@@ -48,7 +48,7 @@ namespace KumoNEXT
             //初始化WebView组件
             Progress.Value = 90;
             Description.Content = "准备渲染器...";
-            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --disable-web-security --no-sandbox --renderer-process-limit=1 --single-process";
+            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --disable-web-security --no-sandbox";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
                 AdditionalBrowserArguments = WebviewArgu
@@ -58,9 +58,9 @@ namespace KumoNEXT
 #if DEBUG
             await Task.Delay(200);
 #endif
-            new WebRender().Show();
-            new WebRender().Show();
-            new WebRender().Show();
+            new AppCore.WebRender().Show();
+            new AppCore.WebRender().Show();
+            new AppCore.WebRender().Show();
             Progress.Value = 100;
             Description.Content = "准备就绪";
             await Task.Delay(100);

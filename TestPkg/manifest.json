@@ -10,5 +10,8 @@
         "ReadFile",
         "WriteFile",
         "Execute"
-    ]
+    ],
+    "Path": "CorePkg/TestPkg",
+    "Domain": "test.kumo-desktop.qinlili.bid",
+    "Entry": "index.html"
 }

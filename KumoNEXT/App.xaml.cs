@@ -41,7 +41,7 @@ namespace KumoNEXT
                 }
             });
             Console.WriteLine("Launch Argu:"+JsonSerializer.Serialize(ParsedArgu));
-            KumoNEXT.App app = new KumoNEXT.App();
+            KumoNEXT.App app = new KumoNEXT.App(ParsedArgu);
             app.InitializeComponent();
             app.Run();
         }

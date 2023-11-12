@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace KumoNEXT.Scheme
 {
     //调用程序的参数清单，不在清单中的参数会被忽略
-    internal class LaunchArgu
+    public class LaunchArgu
     {
         //进程类型
         //ui-标准的界面进程，可以有多个
