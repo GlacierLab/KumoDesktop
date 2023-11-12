@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KumoNEXT.Scheme
+﻿namespace KumoNEXT.Scheme
 {
     //核心配置文件格式，可通过外部更新，默认使用内置值
     //该配置文件管理云酱运行时的参数，不面向普通用户开放，不可通过图形界面更改
     public class MainConfig
     {
         //[不可覆盖]当前主程序数字版本
-        public  int RuntimeVersion { get;  } = 100;
+        public int RuntimeVersion { get; } = 100;
         //[不可覆盖]当前主程序字符串版本
-        public string RuntimeVersionStr { get;  } = "1.0.0 Dev Channel 0";
+        public string RuntimeVersionStr { get; } = "1.0.0 Dev Channel 0";
         //[仅覆盖]当前配置文件所需最低和最高的主程序版本，该值仅适用于外部热更新配置文件，内置配置文件一定可被当前版本加载因此默认值永远为0，该值用于防止主程序加载版本不匹配的配置文件
         public int MaxRuntimeVersion { get; set; } = 0;
         public int MinRuntimeVersion { get; set; } = 0;

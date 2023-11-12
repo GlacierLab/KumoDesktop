@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Shapes;
 
 namespace KumoNEXT
 {
@@ -30,7 +29,8 @@ namespace KumoNEXT
         {
             //解析参数
             ParsedArgu = new Scheme.LaunchArgu();
-            Array.ForEach(Args, (string argu) => {
+            Array.ForEach(Args, (string argu) =>
+            {
                 if (argu.StartsWith("--"))
                 {
                     string[] parsed = argu.Substring(2).Split("=");
@@ -44,9 +44,10 @@ namespace KumoNEXT
 #if DEBUG
             Console.WriteLine("Launch Argu:" + JsonSerializer.Serialize(ParsedArgu));
 #endif
-            switch (ParsedArgu.type){
+            switch (ParsedArgu.type)
+            {
                 case "ui":
-                    this.StartupUri= new System.Uri("Init.xaml", System.UriKind.Relative);
+                    this.StartupUri = new System.Uri("Init.xaml", System.UriKind.Relative);
                     break;
                 case "browser":
                     break;
@@ -73,7 +74,7 @@ namespace KumoNEXT
         {
             string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
             Directory.CreateDirectory("Logs");
-            File.WriteAllText("Logs\\Error"+new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString() + ".log",str);
+            File.WriteAllText("Logs\\Error" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString() + ".log", str);
             MessageBox.Show(str);
         }
         static string GetExceptionMsg(Exception ex, string backStr)

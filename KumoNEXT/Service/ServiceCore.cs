@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.IO.Pipes;
-using System.Reflection;
-using System.Windows.Threading;
 
 namespace KumoNEXT.Service
 {
@@ -37,13 +32,13 @@ namespace KumoNEXT.Service
             }
             pipeServer.Close();
             ActiveThreads--;
-            new Thread(CheckAutoExit).Start(); 
+            new Thread(CheckAutoExit).Start();
         }
 
         private static void CheckAutoExit()
         {
             Thread.Sleep(1000);
-            if(ActiveThreads == 0)
+            if (ActiveThreads == 0)
             {
                 Console.WriteLine("Exit Service");
                 App.Current.Dispatcher.Invoke(() =>

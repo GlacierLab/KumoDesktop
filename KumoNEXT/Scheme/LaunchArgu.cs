@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KumoNEXT.Scheme
+﻿namespace KumoNEXT.Scheme
 {
     //调用程序的参数清单，不在清单中的参数会被忽略
     public class LaunchArgu

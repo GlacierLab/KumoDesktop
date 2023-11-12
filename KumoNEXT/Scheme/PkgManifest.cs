@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KumoNEXT.Scheme
+﻿namespace KumoNEXT.Scheme
 {
     //包清单文件，描述包体信息
     //该文件与包版本绑定，不面向普通用户开放修改

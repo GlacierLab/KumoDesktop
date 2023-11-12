@@ -1,6 +1,4 @@
-﻿using Microsoft.Web.WebView2.Core;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 
 namespace KumoNEXT.AppCore
 {
@@ -9,7 +7,7 @@ namespace KumoNEXT.AppCore
     /// </summary>
     public partial class WebRender : Window
     {
-        public WebRender(string Config="{}")
+        public WebRender(string Config = "{}")
         {
             InitializeComponent();
             InitContent();

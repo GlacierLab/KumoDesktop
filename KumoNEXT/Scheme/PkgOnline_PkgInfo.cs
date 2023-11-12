@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KumoNEXT.Scheme
+﻿namespace KumoNEXT.Scheme
 {
     //托管库清单中包体信息格式
     public class PkgOnline_PkgInfo

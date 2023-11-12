@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Pipes;
-using System.Linq;
+﻿using System.IO.Pipes;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KumoNEXT.Service
 {
