@@ -1,7 +1,10 @@
 ﻿using Microsoft.Web.WebView2.Core;
+using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace KumoNEXT
 {
@@ -19,6 +22,8 @@ namespace KumoNEXT
         public static int SecurityLevel = 0;
         //启动参数
         public static Scheme.LaunchArgu? ParsedArgu;
+        //配置文件
+        public static Scheme.MainConfig? MainConfig;
 
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public void InitializeComponent(params string[] Args)
@@ -36,7 +41,9 @@ namespace KumoNEXT
                     }
                 }
             });
+#if DEBUG
             Console.WriteLine("Launch Argu:" + JsonSerializer.Serialize(ParsedArgu));
+#endif
             switch (ParsedArgu.type){
                 case "ui":
                     this.StartupUri= new System.Uri("Init.xaml", System.UriKind.Relative);
@@ -55,10 +62,40 @@ namespace KumoNEXT
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public static void Main(params string[] Args)
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             KumoNEXT.App app = new KumoNEXT.App();
             app.InitializeComponent(Args);
             app.Run();
         }
-    }
 
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
+            Directory.CreateDirectory("Logs");
+            File.WriteAllText("Logs\\Error"+new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString() + ".log",str);
+            MessageBox.Show(str);
+        }
+        static string GetExceptionMsg(Exception ex, string backStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("***************************************************************");
+            sb.AppendLine("************************似乎哪里有点不对劲************************");
+            sb.AppendLine("[时间]：" + DateTime.Now.ToString());
+            if (ex != null)
+            {
+                sb.AppendLine("[错误]：" + ex.GetType().Name);
+                sb.AppendLine("[信息]：" + ex.Message);
+                sb.AppendLine("[堆栈]：" + ex.StackTrace);
+            }
+            else
+            {
+                sb.AppendLine("[异常]：" + backStr);
+            }
+            sb.AppendLine("***************************************************************");
+            return sb.ToString();
+        }
+    }
 }
+
+

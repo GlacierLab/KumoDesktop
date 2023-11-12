@@ -20,10 +20,17 @@ namespace KumoNEXT.Scheme
 
         //包管理下载地址，未指定包托管地址的包都从此地址检索，该地址可通过用户配置文件的镜像地址覆盖
         public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktopPackages/releases/tag/";
+#if DEBUG
+        //默认启动包名，即直接运行时启动的包
+        public string LaunchPkg { get; set; } = "CorePkg.TestPkg";
+        //核心包，只有这些包都已经安装的情况下才可以启动
+        public string[] RequirePkg { get; set; } = { "CorePkg.TestPkg" };
+#else
         //默认启动包名，即直接运行时启动的包
         public string LaunchPkg { get; set; } = "CorePkg.Main.UI";
-        //核心包依赖
+        //核心包，只有这些包都已经安装的情况下才可以启动
         public string[] RequirePkg { get; set; } = { "CorePkg.Main", "CorePkg.Main.Data", "CorePkg.Update" };
+#endif
 
         //调试模式是否开启
         public bool EnableDebug { get; set; } = false;

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,7 +36,31 @@ namespace KumoNEXT
             Progress.IsIndeterminate = false;
             //解析启动参数
             ChangeProgress(0, "解析启动参数...");
+            if (File.Exists("config.json"))
+            {
+                using FileStream openStream = File.OpenRead("config.json");
+                try
+                {
+                    App.MainConfig = await JsonSerializer.DeserializeAsync<Scheme.MainConfig>(openStream);
+                }
+                catch (Exception)
+                {
+                    //自动删除损坏的配置文件
+                    openStream.Close();
+                    try
+                    {
+                        File.Delete("config.json");
+                    }catch (Exception) {
+                    }
+                    App.MainConfig = new Scheme.MainConfig();
+                }
+            }
+            else
+            {
+                App.MainConfig = new Scheme.MainConfig();
+            }
 #if DEBUG
+            Console.WriteLine("Main Config:" + JsonSerializer.Serialize(App.MainConfig));
             await Task.Delay(200);
 #endif
             //检查是否存在必要的包
