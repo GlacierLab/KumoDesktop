@@ -19,7 +19,7 @@ namespace KumoNEXT.Scheme
         public int MinRuntimeVersion { get; set; } = 0;
 
         //包管理下载地址，未指定包托管地址的包都从此地址检索，该地址可通过用户配置文件的镜像地址覆盖
-        public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktop/releases/tag/";
+        public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktopPackages/releases/tag/";
         //默认启动包名，即直接运行时启动的包
         public string LaunchPkg { get; set; } = "CorePkg.Main.UI";
         //核心包依赖

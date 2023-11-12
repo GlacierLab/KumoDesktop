@@ -1,0 +1,12 @@
+{
+    "ManifestVersion": 1,
+    "Name": "CorePkg.TestPkg",
+    "Author": "琴梨梨",
+    "Versions": [
+        {
+            "PkgVersion": 1,
+            "RequireVersion": 100,
+            "Link": "https://github.com/GlacierLab/KumoDesktopPackages/releases/download/CorePkg.TestPkg/CorePkg.TestPkg.1.kumopkg"
+        }
+    ]
+}

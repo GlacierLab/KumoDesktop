@@ -4,7 +4,7 @@
     "Author": "琴梨梨",
     "PkgVersion": 1,
     "RequireVersion": 100,
-    "Server": "https://github.com/GlacierLab/KumoDesktop/releases/tag/",
+    "Server": "https://github.com/GlacierLab/KumoDesktopPackages/releases/tag/",
     "SecurityLevel": 0,
     "Permissions": [
         "ReadFile",
