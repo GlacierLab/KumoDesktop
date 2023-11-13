@@ -3,16 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:local="clr-namespace:KumoNEXT"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="KumoNEXT.TinyPWA"
         mc:Ignorable="d"
-        Title="正在载入..." Height="450" Width="800" WindowStyle="None" BorderBrush="Black" BorderThickness="1,1,1,1">
+        Title="正在载入..." Height="450" Width="800" WindowStyle="None" BorderBrush="Black" BorderThickness="1,1,1,1" StateChanged="Window_StateChanged" MinWidth="180" MinHeight="200">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0"></WindowChrome>
     </WindowChrome.WindowChrome>
     <Grid>
 
-        <Wpf:WebView2 Margin="0,30,0,0" />
+        <Wpf:WebView2 Margin="0,30,0,0" Source="https://ctfile.qinlili.bid" />
+        <Grid Height="30" VerticalAlignment="Top">
+            <Button x:Name="Back" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" >
+                <Button.Content>
+                    <fa:IconBlock Icon="ArrowLeft" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="Refresh" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Margin="30,0,0,0" BorderThickness="0,0,0,0">
+                <Button.Content>
+                    <fa:IconBlock Icon="RotateRight" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="Menu" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,90,0"  BorderThickness="0,0,0,0">
+                <Button.Content>
+                    <fa:IconBlock Icon="Ellipsis" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="Minimize" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,60,0"  BorderThickness="0,0,0,0" Click="Minimize_Click">
+                <Button.Content>
+                    <fa:IconBlock Icon="WindowMinimize" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="Maximize" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}"  Margin="0,0,30,0" BorderThickness="0,0,0,0" Click="Maximize_Click">
+                <Button.Content>
+                    <fa:IconBlock Icon="WindowMaximize" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="Close" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}"  BorderThickness="0,0,0,0" Click="Close_Click">
+                <Button.Content>
+                    <fa:IconBlock Icon="Xmark" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <Label x:Name="Title" MouseDown="Grid_MouseDown" Content="正在加载..." Margin="60,0,120,0" VerticalAlignment="Center" Height="30" FontFamily="DengXian" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
 
     </Grid>
 </Window>
