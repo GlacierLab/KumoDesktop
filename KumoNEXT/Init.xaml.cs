@@ -58,7 +58,7 @@ namespace KumoNEXT
 #endif
             //检查是否存在必要的包
             ChangeProgress(10, "检查必要包体...");
-            if (PackageManager.CheckInstall("CorePkg.Update") == 0)
+            if (PackageManager.CheckInstall("CorePkg.Update"))
             {
 
             }

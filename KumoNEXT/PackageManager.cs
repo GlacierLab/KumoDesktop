@@ -1,6 +1,7 @@
 ﻿using KumoNEXT.Scheme;
 using KumoNEXT.Utils;
 using System.IO;
+using System.IO.Compression;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Threading;
@@ -101,12 +102,12 @@ namespace KumoNEXT
                             //-102扩展包下载失败
                             if (Callback != null)
                             {
-                                CallbackValue.Progress = 10 + (int)(e * 0.8f);
+                                CallbackValue.Progress = -102;
                                 Callback(CallbackValue);
                             }
                             return -102;
                         }
-                        return InstallFromFile(FileName);
+                        return await InstallFromFile(FileName);
                     }
                 }
                 else
@@ -131,10 +132,33 @@ namespace KumoNEXT
                 return -200;
             }
         }
-        public static int InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
+        public async static Task<int> InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
         {
             Scheme.PackageManagerInstallCallback CallbackValue = new();
             //读取包信息
+            ZipArchive PackageFile;
+            Scheme.PkgManifest ParsedManifest;
+            try
+            {
+                PackageFile = ZipFile.OpenRead(Path);
+                ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(PackageFile.GetEntry("manifest.json").Open());
+            }
+            catch  (Exception)
+            {
+                //-400扩展包无法解析
+                if (Callback != null)
+                {
+                    CallbackValue.Progress = -400;
+                    Callback(CallbackValue);
+                }
+                return -400;
+            }
+            Directory.CreateDirectory("PackageData");
+            //处理更新
+            if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
+            {
+
+            }
 
             //解压到目录
 

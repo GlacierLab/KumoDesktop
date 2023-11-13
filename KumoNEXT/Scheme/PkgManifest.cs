@@ -8,6 +8,10 @@
         public int ManifestVersion { get; set; } = 1;
         //包名
         public string Name { get; set; } = "CorePkg.TestPkg";
+        //可读名
+        public string DisplayName { get; set; } = "测试包";
+        //描述
+        public string Description { get; set; } = "一个测试包体";
         //作者
         public string Author { get; set; } = "琴梨梨";
         //是否为原生包
