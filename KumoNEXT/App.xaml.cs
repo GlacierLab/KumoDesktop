@@ -49,7 +49,8 @@ namespace KumoNEXT
                 case "ui":
                     this.StartupUri = new System.Uri("Init.xaml", System.UriKind.Relative);
                     break;
-                case "browser":
+                case "pwa":
+                    this.StartupUri = new System.Uri("TinyPWA.xaml", System.UriKind.Relative);
                     break;
                 case "service":
                     Service.ServiceCore.Main();

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "KumoNEXT": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--type=pwa"
     }
   }
 }

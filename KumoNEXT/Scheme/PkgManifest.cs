@@ -16,6 +16,8 @@
         public string Author { get; set; } = "琴梨梨";
         //是否为原生包
         public bool NativeExt { get; set; } = false;
+        //是否为简单PWA包，简单PWA包只含有配置文件和图标
+        public bool PWA { get; set; } = false;
 
         //当前包数字版本
         public int PkgVersion { get; set; } = 0;
@@ -37,6 +39,7 @@
         //安装路径
         public string Path { get; set; } = "CorePkg/TestPkg";
         //映射域名，对于纯本地扩展包避免使用重复域名，对于在线应用本地化预载资源可以使用重复域名
+        //[PWA包]下该域名即为目标在线域名
         public string Domain { get; set; } = "test.kumo-desktop.qinlili.bid";
         //启动页面
         public string Entry { get; set; } = "index.html";

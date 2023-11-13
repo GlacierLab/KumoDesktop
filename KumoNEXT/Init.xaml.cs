@@ -58,14 +58,17 @@ namespace KumoNEXT
 #endif
             //检查是否存在必要的包
             ChangeProgress(10, "检查必要包体...");
+#if RELEASE
             if (PackageManager.CheckInstall("CorePkg.Update"))
             {
 
             }
+#endif
 #if DEBUG
             await Task.Delay(200);
 #endif
-            //初始化IPC服务进程
+#if DEBUG
+            //初始化IPC服务进程，目前暂不启用，后期会支持跨进程任务传递和后台任务
             ChangeProgress(70, "检查服务进程...");
             if (!File.Exists(@"\\.\pipe\KumoDesktop"))
             {
@@ -74,7 +77,6 @@ namespace KumoNEXT
 #pragma warning restore CS8604 // Possible null reference argument.
             }
             Service.ClientCore.Main();
-#if DEBUG
             await Task.Delay(200);
 #endif
             //初始化WebView组件
