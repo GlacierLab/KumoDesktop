@@ -1,0 +1,12 @@
+{
+    "ManifestVersion": 1,
+    "Name": "PWA.545WebPlayer",
+    "Author": "琴梨梨",
+    "Versions": [
+        {
+            "PkgVersion": 1,
+            "RequireVersion": 100,
+            "Link": "https://github.com/GlacierLab/KumoDesktopPackages/releases/download/PWA.545WebPlayer/PWA.545WebPlayer.1.kumopkg"
+        }
+    ]
+}

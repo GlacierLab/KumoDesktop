@@ -30,7 +30,7 @@ namespace KumoNEXT
 
         private async void Init()
         {
-            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --disable-web-security --no-sandbox --renderer-process-limit=1 --single-process";
+            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --renderer-process-limit=1 --single-process";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
                 AdditionalBrowserArguments = WebviewArgu
@@ -116,6 +116,11 @@ namespace KumoNEXT
         private void SetThemeColor(string Color)
         {
             this.Background= new BrushConverter().ConvertFromString(Color) as SolidColorBrush;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            WebView.Dispose();
         }
     }
 }

@@ -24,7 +24,7 @@
         //当前包所需最低的主程序版本，若主程序版本低于所需版本，会请求更新主程序
         public int RequireVersion { get; set; } = 0;
         //包管理下载地址，该包今后都从此地址检索更新
-        public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktopPackages/releases/tag/";
+        public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktopPackages/releases/download/";
         //包安全级别，只有内置在主配置文件内的可信包允许使用0级别
         //0-无安全措施，适用于可信任的包，无进程/目录隔离，无沙盒，可跨域，无限制调用本地API
         //1-标准安全措施，适用于大部分扩展包，无进程/目录隔离，启用沙盒，禁止跨域，调用受限API需请求权限

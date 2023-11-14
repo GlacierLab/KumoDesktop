@@ -64,6 +64,13 @@ namespace KumoNEXT
 
             }
 #endif
+            if (!PackageManager.CheckInstall(Argu.package))
+            {
+                int ReturnValue=await PackageManager.InstallFromOfficial(Argu.package);
+                if(! (ReturnValue == 100)) {
+                    MessageBox.Show(ReturnValue.ToString());
+                }
+            }
 #if DEBUG
             await Task.Delay(200);
 #endif
@@ -91,8 +98,6 @@ namespace KumoNEXT
 #if DEBUG
             await Task.Delay(200);
 #endif
-            new AppCore.WebRender().Show();
-            new AppCore.WebRender().Show();
             new AppCore.WebRender().Show();
             ChangeProgress(100, "准备就绪");
             await Task.Delay(100);

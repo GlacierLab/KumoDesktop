@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Text.Json;
+using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace KumoNEXT
@@ -12,6 +13,7 @@ namespace KumoNEXT
     {
         public async static Task<int> InstallFromOfficial(string PkgName, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
         {
+            Console.WriteLine("Install package:" + PkgName);
             return await InstallFromOnlineSource(App.MainConfig.Server + PkgName + "/Package.json", Callback);
         }
         public async static Task<int> InstallFromOnlineSource(string OnlineManifest, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
@@ -107,6 +109,7 @@ namespace KumoNEXT
                             }
                             return -102;
                         }
+                        await file.DisposeAsync();
                         return await InstallFromFile(FileName);
                     }
                 }
@@ -132,7 +135,7 @@ namespace KumoNEXT
                 return -200;
             }
         }
-        public async static Task<int> InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
+        public async static Task<int> InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null,bool DeletePkg=true)
         {
             Scheme.PackageManagerInstallCallback CallbackValue = new();
             //读取包信息
@@ -154,15 +157,28 @@ namespace KumoNEXT
                 return -400;
             }
             Directory.CreateDirectory("PackageData");
-            //处理更新
-            if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
+            //建立存档
+            if (!File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
             {
-
+                using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                await JsonSerializer.SerializeAsync(createStream, new Scheme.PkgLocalData());
+                await createStream.DisposeAsync();
             }
-
             //解压到目录
-
-            return 0;
+            Directory.CreateDirectory("Package\\" + ParsedManifest.Path);
+            await Task.Run(() => PackageFile.ExtractToDirectory("Package\\" + ParsedManifest.Path, true));
+            PackageFile.Dispose();
+            if (DeletePkg)
+            {
+                File.Delete(Path);
+            }
+            //安装成功
+            if (Callback != null)
+            {
+                CallbackValue.Progress = 100;
+                Callback(CallbackValue);
+            }
+            return 100;
         }
         public static int Update(string PkgName)
         {
@@ -174,7 +190,9 @@ namespace KumoNEXT
         }
         public static bool CheckInstall(string PkgName)
         {
-            return false;
+            bool Installed = Directory.Exists("Package\\" + PkgName.Replace(".", "\\"));
+            Console.WriteLine("Check package:" + PkgName + " - " + Installed.ToString());
+            return Installed;
         }
         public static int GetInstalledVersion(string PkgName)
         {

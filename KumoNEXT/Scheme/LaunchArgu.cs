@@ -9,7 +9,7 @@
         //service-后台服务进程，负责任务分配及长时间任务处理，有且仅能有一个
         public string type { get; set; } = "ui";
         //启动目标包名，默认为主界面
-        public string package { get; set; } = "CorePkg.Main.UI";
+        public string package { get; set; } = "PWA.545WebPlayer";
         //对目标包名传递的信息
         public string msg { get; set; } = "";
     }
