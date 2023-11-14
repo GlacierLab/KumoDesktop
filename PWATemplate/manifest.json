@@ -1,0 +1,14 @@
+{
+    "ManifestVersion": 1,
+    "Name": "PWA.545WebPlayer",
+    "DisplayName": "545在线",
+    "Author": "琴梨梨",
+    "PkgVersion": 1,
+    "RequireVersion": 100,
+    "SecurityLevel": 0,
+    "Permissions": [],
+    "Path": "PWA\\545WebPlayer",
+    "Domain": "545.qinlili.bid",
+    "Entry": "",
+    "ThemeColor": "#FADCBB"
+}

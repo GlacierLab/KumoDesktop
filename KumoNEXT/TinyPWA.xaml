@@ -7,20 +7,20 @@
         xmlns:local="clr-namespace:KumoNEXT"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="KumoNEXT.TinyPWA"
         mc:Ignorable="d"
-        Title="正在载入..." Height="450" Width="800" WindowStyle="None" BorderBrush="Black" BorderThickness="1,1,1,1" StateChanged="Window_StateChanged" MinWidth="180" MinHeight="200">
+        Title="正在载入..." Height="800" Width="450" WindowStyle="None" BorderBrush="Black"  StateChanged="Window_StateChanged" MinWidth="180" MinHeight="200">
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="-1" CaptionHeight="0"></WindowChrome>
+        <WindowChrome GlassFrameThickness="1" CaptionHeight="0"></WindowChrome>
     </WindowChrome.WindowChrome>
     <Grid>
 
-        <Wpf:WebView2 Margin="0,30,0,0" Source="https://ctfile.qinlili.bid" />
+        <Wpf:WebView2 x:Name="WebView" Margin="1,30,1,1" IsEnabled="False" />
         <Grid Height="30" VerticalAlignment="Top">
-            <Button x:Name="Back" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" >
+            <Button x:Name="Back" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Back_Click" >
                 <Button.Content>
                     <fa:IconBlock Icon="ArrowLeft" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="Refresh" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Margin="30,0,0,0" BorderThickness="0,0,0,0">
+            <Button x:Name="Refresh" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Margin="30,0,0,0" BorderThickness="0,0,0,0" Click="Refresh_Click">
                 <Button.Content>
                     <fa:IconBlock Icon="RotateRight" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
