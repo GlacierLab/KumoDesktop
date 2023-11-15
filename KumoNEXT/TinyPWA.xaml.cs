@@ -1,21 +1,12 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace KumoNEXT
@@ -33,10 +24,10 @@ namespace KumoNEXT
         {
             Init(PkgName, NewWindow, NewWindowLink);
         }
-        public void Init(string? PkgName=null,bool NewWindow=false,string? NewWindowLink=null)
-        {   
+        public void Init(string? PkgName = null, bool NewWindow = false, string? NewWindowLink = null)
+        {
             InitializeComponent();
-            InitWebView(NewWindow,NewWindowLink);
+            InitWebView(NewWindow, NewWindowLink);
             if (PkgName == null)
             {
                 PkgName = App.ParsedArgu.package;
@@ -58,6 +49,32 @@ namespace KumoNEXT
             }
             Title = ParsedManifest.DisplayName;
             SetThemeColor(ParsedManifest.ThemeColor);
+            if (ParsedManifest.SaveWindowSize)
+            {
+                try
+                {
+                    ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(File.OpenRead("PackageData\\" + PkgName + ".json"));
+                }
+                catch (Exception)
+                {
+                    ParsedLocalData = new Scheme.PkgLocalData();
+                    using FileStream createStream = File.Create("PackageData\\" + PkgName + ".json");
+                    {
+                        JsonSerializer.Serialize(createStream, ParsedLocalData);
+                        createStream.Dispose();
+                    }
+                }
+                if (ParsedLocalData.Height > 0 && ParsedLocalData.Width > 0)
+                {
+                    Height = ParsedLocalData.Height;
+                    Width = ParsedLocalData.Width;
+                }
+            }
+            else
+            {
+                Height = ParsedManifest.Height;
+                Width = ParsedManifest.Width;
+            }
             if (File.Exists(PkgPath + "icon.png"))
             {
                 Stream imageStreamSource = new FileStream(PkgPath + "icon.png", FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -65,7 +82,8 @@ namespace KumoNEXT
                 BitmapSource bitmapSource = decoder.Frames[0];
                 this.Icon = bitmapSource;
             }
-            if (NewWindow && new Uri(NewWindowLink).DnsSafeHost!=ParsedManifest.Domain) {
+            if (NewWindow && new Uri(NewWindowLink).DnsSafeHost != ParsedManifest.Domain)
+            {
                 MenuIcon.Icon = FontAwesome.Sharp.IconChar.ArrowUpRightFromSquare;
             }
             if (WebView.CoreWebView2 != null)
@@ -82,7 +100,7 @@ namespace KumoNEXT
         }
 
         Scheme.PkgManifest ParsedManifest;
-
+        Scheme.PkgLocalData ParsedLocalData;
         private async void InitWebView(bool NewWindow = false, string? NewWindowLink = null)
         {
             var WebviewArgu = "--disable-features=msSmartScreenProtection --in-process-gpu --renderer-process-limit=1";
@@ -104,7 +122,7 @@ namespace KumoNEXT
                 string CurrentDomain = new Uri(u).DnsSafeHost;
                 return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain));
             };
-            WebView.CoreWebView2.NavigationStarting += (a,e)=>
+            WebView.CoreWebView2.NavigationStarting += (a, e) =>
             {
                 if (!CheckWhitelist(e.Uri))
                 {
@@ -126,7 +144,7 @@ namespace KumoNEXT
                 }
                 else
                 {
-                    new TinyPWA(ParsedManifest.Name,true, e.Uri).Show();
+                    new TinyPWA(ParsedManifest.Name, true, e.Uri).Show();
                 }
             };
             if (ParsedManifest != null)
@@ -152,7 +170,8 @@ namespace KumoNEXT
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton ==MouseButton.Left) {
+            if (e.ChangedButton == MouseButton.Left)
+            {
                 if (e.ClickCount == 2)
                 {
                     WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
@@ -218,12 +237,37 @@ namespace KumoNEXT
 
         private void SetThemeColor(string Color)
         {
-            this.Background= new BrushConverter().ConvertFromString(Color) as SolidColorBrush;
+            this.Background = new BrushConverter().ConvertFromString(Color) as SolidColorBrush;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        bool ReadyToExit = false;
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            WebView.Dispose();
+            if (!ReadyToExit)
+            {
+                e.Cancel = true;
+                TitleText.Content = "正在保存数据...";
+                if (ParsedManifest.SaveWindowSize)
+                {
+                    ParsedLocalData.Height = (int)Math.Round(Height);
+                    ParsedLocalData.Width = (int)Math.Round(Width);
+                    MinHeight = 30;
+                    Height = 30;
+                    using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                    await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
+                    await createStream.DisposeAsync();
+                }
+                WebView.Dispose();
+                ReadyToExit = true;
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.Close();
+                    }));
+                });
+            }
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)

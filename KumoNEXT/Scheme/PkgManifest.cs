@@ -44,9 +44,14 @@
         //启动页面
         public string Entry { get; set; } = "index.html";
         //信任域名，除映射域名外允许在窗体内加载的域名，若尝试跳转非信任域名则使用浏览器打开
-        public string[] TrustedDomain { get; set; } = {};
+        public string[] TrustedDomain { get; set; } = { };
         //主题颜色，决定部分窗体边框和背景色，暂不支持透明色
         public string ThemeColor { get; set; } = "#FFFFFF";
+        //默认窗口宽高
+        public int Height { get; set; } = 450;
+        public int Width { get; set; } = 800;
+        //是否记忆窗口大小
+        public bool SaveWindowSize { get; set; } = false;
 
         //安全校验值，目前暂未实施
         public string Signature { get; set; } = "";

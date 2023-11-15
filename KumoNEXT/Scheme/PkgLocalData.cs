@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace KumoNEXT.Scheme
 {
@@ -15,6 +10,9 @@ namespace KumoNEXT.Scheme
         public string[] AcceptPermissions { get; set; } = { };
         //长期拒绝的权限
         public string[] DenyPermissions { get; set; } = { };
+        //保存的窗口大小
+        public int Height { get; set; } = 0;
+        public int Width { get; set; } = 0;
         //JSON格式的偏好设置，C#层不做进一步解析
         public string PreferenceSaved { get; set; } = "{}";
         [JsonExtensionData]

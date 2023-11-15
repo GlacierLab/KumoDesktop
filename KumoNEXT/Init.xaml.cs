@@ -1,10 +1,8 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Media.Animation;
 
 namespace KumoNEXT
 {
@@ -23,7 +21,8 @@ namespace KumoNEXT
                 Description.Content = Text;
             }));
         }
-        private async Task<bool> EnsurePackage(string Name){
+        private async Task<bool> EnsurePackage(string Name)
+        {
             if (!await PackageManager.EnsureInstall(Name))
             {
                 var result = MessageBox.Show("安装" + Name + "时遇到错误，是否重试？跳过此包体可能导致程序运行异常", "包体缺失", MessageBoxButton.YesNo);
@@ -47,7 +46,7 @@ namespace KumoNEXT
                 try
                 {
                     App.MainConfig = await JsonSerializer.DeserializeAsync<Scheme.MainConfig>(openStream);
-                    if((App.MainConfig.MaxRuntimeVersion>0&& App.MainConfig.MaxRuntimeVersion < App.MainConfig.RuntimeVersion)|| (App.MainConfig.MinRuntimeVersion > 0 && App.MainConfig.MinRuntimeVersion > App.MainConfig.RuntimeVersion))
+                    if ((App.MainConfig.MaxRuntimeVersion > 0 && App.MainConfig.MaxRuntimeVersion < App.MainConfig.RuntimeVersion) || (App.MainConfig.MinRuntimeVersion > 0 && App.MainConfig.MinRuntimeVersion > App.MainConfig.RuntimeVersion))
                     {
                         //删除版本要求不符的配置文件
                         App.MainConfig = new Scheme.MainConfig();
@@ -101,7 +100,7 @@ namespace KumoNEXT
             Scheme.PkgManifest ParsedManifest;
             try
             {
-                ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(File.OpenRead("Package\\" + Argu.package.Replace(".", "\\")+"\\manifest.json"));
+                ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(File.OpenRead("Package\\" + Argu.package.Replace(".", "\\") + "\\manifest.json"));
             }
             catch (Exception)
             {
@@ -116,7 +115,7 @@ namespace KumoNEXT
             //简单PWA包直接启动PWA模块
             if (ParsedManifest.PWA)
             {
-                Process.Start(Environment.ProcessPath, "--type=pwa --package="+ ParsedManifest.Name);
+                Process.Start(Environment.ProcessPath, "--type=pwa --package=" + ParsedManifest.Name);
                 Environment.Exit(0);
                 return;
             }
@@ -138,8 +137,8 @@ namespace KumoNEXT
             {
                 AdditionalBrowserArguments = WebviewArgu
             };
-            Directory.CreateDirectory(Environment.CurrentDirectory + @"\QinliliWebview2\");
-            App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\QinliliWebview2\\", options);
+            Directory.CreateDirectory(Environment.CurrentDirectory + @"\WebviewCache\App\");
+            App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\WebviewCache\\App\\", options);
 #if DEBUG
             await Task.Delay(200);
 #endif

@@ -11,5 +11,8 @@
     "Path": "PWA\\545WebPlayer",
     "Domain": "545.qinlili.bid",
     "Entry": "",
-    "ThemeColor": "#FADCBB"
+    "ThemeColor": "#FADCBB",
+    "Height": 800,
+    "Width": 450,
+    "SaveWindowSize": true
 }

@@ -4,9 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Text.Json;
-using System.Windows.Media.Animation;
-using System.Windows.Shell;
-using System.Windows.Threading;
 
 namespace KumoNEXT
 {
@@ -87,7 +84,7 @@ namespace KumoNEXT
                         //回传下载进度
                         if (Callback != null)
                         {
-                            CallbackValue.Progress = 10+ (int)(e*0.8f);
+                            CallbackValue.Progress = 10 + (int)(e * 0.8f);
                             Callback(CallbackValue);
                         }
                     };
@@ -100,7 +97,8 @@ namespace KumoNEXT
                         try
                         {
                             await client.DownloadDataAsync(Current.Link, file, progress);
-                        }catch (Exception)
+                        }
+                        catch (Exception)
                         {
                             //-102扩展包下载失败
                             if (Callback != null)
@@ -136,7 +134,7 @@ namespace KumoNEXT
                 return -200;
             }
         }
-        public async static Task<int> InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null,bool DeletePkg=true)
+        public async static Task<int> InstallFromFile(string Path, Action<Scheme.PackageManagerInstallCallback>? Callback = null, bool DeletePkg = true)
         {
             Scheme.PackageManagerInstallCallback CallbackValue = new();
             //读取包信息
@@ -147,7 +145,7 @@ namespace KumoNEXT
                 PackageFile = ZipFile.OpenRead(Path);
                 ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(PackageFile.GetEntry("manifest.json").Open());
             }
-            catch  (Exception)
+            catch (Exception)
             {
                 //-400扩展包无法解析
                 if (Callback != null)
