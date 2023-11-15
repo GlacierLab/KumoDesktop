@@ -112,6 +112,7 @@ namespace KumoNEXT
             App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, System.Environment.CurrentDirectory + @"\WebviewCache\PWA\", options);
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.IsEnabled = true;
+            WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
             WebView.CoreWebView2.DocumentTitleChanged += (a, b) =>
             {
                 this.TitleText.Content = WebView.CoreWebView2.DocumentTitle;
@@ -120,7 +121,7 @@ namespace KumoNEXT
             Func<string, bool> CheckWhitelist = (string u) =>
             {
                 string CurrentDomain = new Uri(u).DnsSafeHost;
-                return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain));
+                return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain)|| u.StartsWith("data"));
             };
             WebView.CoreWebView2.NavigationStarting += (a, e) =>
             {
@@ -145,6 +146,21 @@ namespace KumoNEXT
                 else
                 {
                     new TinyPWA(ParsedManifest.Name, true, e.Uri).Show();
+                }
+            };
+            //错误页面
+            WebView.CoreWebView2.NavigationCompleted += (a, e) =>
+            {
+                if (e.IsSuccess)
+                {
+
+                }
+                else
+                {
+                    if (e.WebErrorStatus != CoreWebView2WebErrorStatus.OperationCanceled)
+                    {
+                        WebView.CoreWebView2.NavigateToString(Properties.Resources.PWA_Error);
+                    }
                 }
             };
             if (ParsedManifest != null)
@@ -243,7 +259,7 @@ namespace KumoNEXT
         bool ReadyToExit = false;
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!ReadyToExit)
+            if (!ReadyToExit&& MenuIcon.Icon != FontAwesome.Sharp.IconChar.ArrowUpRightFromSquare)
             {
                 e.Cancel = true;
                 TitleText.Content = "正在保存数据...";
