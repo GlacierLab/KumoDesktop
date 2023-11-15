@@ -3,6 +3,7 @@
     "Name": "PWA.545WebPlayer",
     "DisplayName": "545在线",
     "Author": "琴梨梨",
+    "PWA": true,
     "PkgVersion": 1,
     "RequireVersion": 100,
     "SecurityLevel": 0,

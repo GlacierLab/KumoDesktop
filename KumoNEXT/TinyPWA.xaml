@@ -27,7 +27,7 @@
             </Button>
             <Button x:Name="Menu" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,90,0"  BorderThickness="0,0,0,0" Click="Menu_Click">
                 <Button.Content>
-                    <fa:IconBlock Icon="Ellipsis" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                    <fa:IconBlock x:Name="MenuIcon" Icon="Ellipsis" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
             <Button x:Name="Minimize" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,60,0"  BorderThickness="0,0,0,0" Click="Minimize_Click">
@@ -45,7 +45,7 @@
                     <fa:IconBlock Icon="Xmark" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Label x:Name="Title" MouseDown="Grid_MouseDown" Content="正在加载..." Margin="60,0,120,0" VerticalAlignment="Center" Height="30" FontFamily="DengXian" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="TitleText" MouseDown="Grid_MouseDown" Content="正在加载..." Margin="60,0,120,0" VerticalAlignment="Center" Height="30" FontFamily="DengXian" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
         <Button Content="Button" HorizontalAlignment="Left" Margin="189,521,0,0" VerticalAlignment="Top"/>
 
