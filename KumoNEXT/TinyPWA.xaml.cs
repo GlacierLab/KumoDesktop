@@ -30,14 +30,14 @@ namespace KumoNEXT
 
         private async void Init()
         {
-            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msEdgeAVIF --in-process-gpu --renderer-process-limit=1 --single-process";
+            var WebviewArgu = "--disable-features=msSmartScreenProtection --in-process-gpu --renderer-process-limit=1";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
                 AdditionalBrowserArguments = WebviewArgu
             };
-            Directory.CreateDirectory(System.Environment.CurrentDirectory + @"\QinliliWebview2\");
-            var webView2Environment = await CoreWebView2Environment.CreateAsync(null, System.Environment.CurrentDirectory + @"\QinliliWebview2\", options);
-            await WebView.EnsureCoreWebView2Async(webView2Environment);
+            Directory.CreateDirectory(System.Environment.CurrentDirectory + @"\WebviewCache\PWA\");
+            App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, System.Environment.CurrentDirectory + @"\WebviewCache\PWA\", options);
+            await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.IsEnabled = true;
             WebView.CoreWebView2.DocumentTitleChanged += (a, b) =>
             {
@@ -121,6 +121,11 @@ namespace KumoNEXT
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             WebView.Dispose();
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            //菜单里面塞什么还没想好
         }
     }
 }

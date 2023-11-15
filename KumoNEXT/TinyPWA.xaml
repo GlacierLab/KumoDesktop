@@ -25,7 +25,7 @@
                     <fa:IconBlock Icon="RotateRight" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="Menu" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,90,0"  BorderThickness="0,0,0,0">
+            <Button x:Name="Menu" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,90,0"  BorderThickness="0,0,0,0" Click="Menu_Click">
                 <Button.Content>
                     <fa:IconBlock Icon="Ellipsis" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>

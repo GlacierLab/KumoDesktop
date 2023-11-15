@@ -18,7 +18,7 @@
         //默认启动包名，即直接运行时启动的包
         public string LaunchPkg { get; set; } = "CorePkg.TestPkg";
         //核心包，只有这些包都已经安装的情况下才可以启动
-        public string[] RequirePkg { get; set; } = { "CorePkg.TestPkg" };
+        public string[] RequirePkg { get; set; } = { "CorePkg.TestPkg", "CorePkg.TestPkg2" };
 #else
         //默认启动包名，即直接运行时启动的包
         public string LaunchPkg { get; set; } = "CorePkg.Main.UI";

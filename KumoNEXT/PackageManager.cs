@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Text.Json;
+using System.Windows.Media.Animation;
 using System.Windows.Shell;
 using System.Windows.Threading;
 
@@ -193,6 +194,18 @@ namespace KumoNEXT
             bool Installed = Directory.Exists("Package\\" + PkgName.Replace(".", "\\"));
             Console.WriteLine("Check package:" + PkgName + " - " + Installed.ToString());
             return Installed;
+        }
+        public async static Task<bool> EnsureInstall(string PkgName)
+        {
+            if (!CheckInstall(PkgName))
+            {
+                int ReturnValue = await InstallFromOfficial(PkgName);
+                if (!(ReturnValue == 100))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public static int GetInstalledVersion(string PkgName)
         {
