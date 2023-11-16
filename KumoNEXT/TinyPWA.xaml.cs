@@ -99,8 +99,8 @@ namespace KumoNEXT
             }
         }
 
-        Scheme.PkgManifest ParsedManifest;
-        Scheme.PkgLocalData ParsedLocalData;
+        Scheme.PkgManifest? ParsedManifest;
+        Scheme.PkgLocalData? ParsedLocalData;
         private async void InitWebView(bool NewWindow = false, string? NewWindowLink = null)
         {
             var WebviewArgu = "--disable-features=msSmartScreenProtection --in-process-gpu --renderer-process-limit=1";

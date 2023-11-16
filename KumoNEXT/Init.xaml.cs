@@ -142,7 +142,7 @@ namespace KumoNEXT
 #if DEBUG
             await Task.Delay(200);
 #endif
-            new AppCore.WebRender().Show();
+            new AppCore.WebRender(ParsedManifest).Show();
             ChangeProgress(100, "准备就绪");
             await Task.Delay(100);
             this.Close();
