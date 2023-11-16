@@ -25,7 +25,7 @@ namespace KumoNEXT.Service
             else
             {
             }
-            pipeClient.Close();
+            //pipeClient.Close();
         }
     }
 }

@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:KumoNEXT"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="KumoNEXT.AppCore.WebRender"
         mc:Ignorable="d"
-        Title="WebRender" Height="450" Width="800">
+        Title="WebRender" Height="450" Width="800" WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" CaptionHeight="0"></WindowChrome>
+    </WindowChrome.WindowChrome>
     <Grid>
 
-        <Wpf:WebView2 x:Name="WebView"/>
+        <Wpf:WebView2 x:Name="WebView" Margin="1,1,1,1"/>
 
     </Grid>
 </Window>

@@ -13,13 +13,11 @@ namespace KumoNEXT.Service
         }
         private static void ServerThread(object? data)
         {
-            ActiveThreads++;
-            NamedPipeServerStream pipeServer = new NamedPipeServerStream("KumoDesktop", PipeDirection.InOut);
+            NamedPipeServerStream pipeServer = new NamedPipeServerStream("KumoDesktop", PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances);
             int threadId = Thread.CurrentThread.ManagedThreadId;
             pipeServer.WaitForConnection();
+            ActiveThreads++;
             Console.WriteLine("Connected to Client thread[{0}].", threadId);
-            //新建线程等待新连接
-            //new Thread(ServerThread).Start();
             try
             {
                 StreamString ss = new StreamString(pipeServer);
@@ -30,8 +28,10 @@ namespace KumoNEXT.Service
             {
                 Console.WriteLine("Error: {0}", e.Message);
             }
-            pipeServer.Close();
-            ActiveThreads--;
+            //新建线程等待新连接
+            new Thread(ServerThread).Start();
+            //pipeServer.Close();
+            //ActiveThreads--;
             new Thread(CheckAutoExit).Start();
         }
 
