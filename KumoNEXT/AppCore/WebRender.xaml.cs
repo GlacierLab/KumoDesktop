@@ -12,7 +12,7 @@ namespace KumoNEXT.AppCore
     /// </summary>
     public partial class WebRender : Window
     {
-        public WebRender(string PkgName, bool HotInstall=false)
+        public WebRender(string PkgName, bool HotInstall = false)
         {
             if (HotInstall)
             {
@@ -52,7 +52,7 @@ namespace KumoNEXT.AppCore
         }
         Scheme.PkgManifest? ParsedManifest;
         Scheme.PkgLocalData? ParsedLocalData;
-        string PkgPath="";
+        string PkgPath = "";
         private async void Init(Scheme.PkgManifest PkgManifest)
         {
             InitializeComponent();
@@ -73,7 +73,7 @@ namespace KumoNEXT.AppCore
                 }
             }
             //设置窗口大小
-            if (ParsedLocalData.Height > 0 && ParsedLocalData.Width > 0&&ParsedManifest.SaveWindowSize)
+            if (ParsedLocalData.Height > 0 && ParsedLocalData.Width > 0 && ParsedManifest.SaveWindowSize)
             {
                 Height = ParsedLocalData.Height;
                 Width = ParsedLocalData.Width;
@@ -94,7 +94,7 @@ namespace KumoNEXT.AppCore
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
-            WebView.CoreWebView2.Navigate("https://"+ParsedManifest.Domain+"/"+ParsedManifest.Entry);
+            WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
         }
 
 

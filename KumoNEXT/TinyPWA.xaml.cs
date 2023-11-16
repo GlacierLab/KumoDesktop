@@ -1,5 +1,4 @@
 ﻿using Microsoft.Web.WebView2.Core;
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -7,7 +6,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace KumoNEXT
 {
@@ -121,7 +119,7 @@ namespace KumoNEXT
             Func<string, bool> CheckWhitelist = (string u) =>
             {
                 string CurrentDomain = new Uri(u).DnsSafeHost;
-                return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain)|| u.StartsWith("data"));
+                return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain) || u.StartsWith("data"));
             };
             WebView.CoreWebView2.NavigationStarting += (a, e) =>
             {
@@ -259,7 +257,7 @@ namespace KumoNEXT
         bool ReadyToExit = false;
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!ReadyToExit&& MenuIcon.Icon != FontAwesome.Sharp.IconChar.ArrowUpRightFromSquare)
+            if (!ReadyToExit && MenuIcon.Icon != FontAwesome.Sharp.IconChar.ArrowUpRightFromSquare)
             {
                 e.Cancel = true;
                 TitleText.Content = "正在保存数据...";
