@@ -151,7 +151,6 @@ namespace KumoNEXT
             {
                 if (e.IsSuccess)
                 {
-
                 }
                 else
                 {
@@ -177,10 +176,7 @@ namespace KumoNEXT
             }
         }
 
-        private void CoreWebView2_NavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -26,7 +26,8 @@
         public string[] RequirePkg { get; set; } = { "CorePkg.Main", "CorePkg.Main.Data", "CorePkg.Update" };
 #endif
 
-        //调试模式是否开启
+        //调试模式是否开启，只有开启情况下F12可以正常打开，右键默认菜单会显示
+        //PWA窗体无论任何时候都可以打开F12，这是为了更符合浏览器的表现
         public bool EnableDebug { get; set; } = false;
         //调试模式组件包名，此包无需授权即可调用特权API
         public string DebugPkg { get; set; } = "CorePkg.Debug";

@@ -95,6 +95,53 @@ namespace KumoNEXT.AppCore
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
             WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
+            WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
+            //域名白名单机制
+            Func<string, bool> CheckWhitelist = (string u) =>
+            {
+                string CurrentDomain = new Uri(u).DnsSafeHost;
+                return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain) || u.StartsWith("data"));
+            };
+            WebView.CoreWebView2.NavigationStarting += (a, e) =>
+            {
+                if (!CheckWhitelist(e.Uri))
+                {
+                    e.Cancel = true;
+                    ProcessStartInfo startInfo = new(e.Uri);
+                    startInfo.UseShellExecute = true;
+                    Process.Start(startInfo);
+                }
+            };
+            //新窗口打开
+            WebView.CoreWebView2.NewWindowRequested += (a, e) =>
+            {
+                e.Handled = true;
+                if (!CheckWhitelist(e.Uri))
+                {
+                    ProcessStartInfo startInfo = new(e.Uri);
+                    startInfo.UseShellExecute = true;
+                    Process.Start(startInfo);
+                }
+                else
+                {
+                    new TinyPWA(ParsedManifest.Name, true, e.Uri).Show();
+                }
+            };
+            //错误页面
+            WebView.CoreWebView2.NavigationCompleted += (a, e) =>
+            {
+                if (e.IsSuccess)
+                {
+                    WebView.CoreWebView2.AddHostObjectToScript("ParsedManifest", ParsedManifest);
+                }
+                else
+                {
+                    if (e.WebErrorStatus != CoreWebView2WebErrorStatus.OperationCanceled)
+                    {
+                        WebView.CoreWebView2.NavigateToString(Properties.Resources.PWA_Error);
+                    }
+                }
+            };
         }
 
 
