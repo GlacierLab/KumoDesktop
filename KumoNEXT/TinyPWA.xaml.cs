@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace KumoNEXT
@@ -121,8 +122,11 @@ namespace KumoNEXT
                 string CurrentDomain = new Uri(u).DnsSafeHost;
                 return ((CurrentDomain == ParsedManifest.Domain) || ParsedManifest.TrustedDomain.Contains(CurrentDomain) || u.StartsWith("data"));
             };
+            Storyboard sb = this.FindResource("Loading") as Storyboard;
             WebView.CoreWebView2.NavigationStarting += (a, e) =>
             {
+                RefreshIcon.Icon = FontAwesome.Sharp.IconChar.CircleNotch;
+                sb.Begin();
                 if (!CheckWhitelist(e.Uri))
                 {
                     e.Cancel = true;
@@ -149,6 +153,8 @@ namespace KumoNEXT
             //错误页面
             WebView.CoreWebView2.NavigationCompleted += (a, e) =>
             {
+                sb.Stop();
+                RefreshIcon.Icon = FontAwesome.Sharp.IconChar.RotateRight;
                 if (e.IsSuccess)
                 {
                 }

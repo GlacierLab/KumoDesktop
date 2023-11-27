@@ -8,21 +8,34 @@
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="KumoNEXT.TinyPWA"
         mc:Ignorable="d"
         Title="正在载入..." Height="800" Width="450" WindowStyle="None" BorderBrush="Black"  StateChanged="Window_StateChanged" MinWidth="180" MinHeight="200" Closing="Window_Closing">
+    <Window.Resources>
+        <Storyboard x:Key="Loading">
+            <DoubleAnimation
+                Storyboard.TargetName="MyAnimatedTransform"
+                Storyboard.TargetProperty="(RotateTransform.Angle)"
+                From="0.0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+            </Storyboard>
+    </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="1" CaptionHeight="0"></WindowChrome>
     </WindowChrome.WindowChrome>
     <Grid>
 
-        <Wpf:WebView2 x:Name="WebView" Margin="1,30,1,1" IsEnabled="False" />
+        <Wpf:WebView2 x:Name="WebView" Margin="1,30,1,1" IsEnabled="False" >
+        </Wpf:WebView2>
         <Grid Height="30" VerticalAlignment="Top">
             <Button x:Name="Back" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Back_Click" >
                 <Button.Content>
                     <fa:IconBlock Icon="ArrowLeft" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="Refresh" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Margin="30,0,0,0" BorderThickness="0,0,0,0" Click="Refresh_Click">
+            <Button x:Name="Refresh" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Margin="30,0,0,0" BorderThickness="0,0,0,0" Click="Refresh_Click" >
                 <Button.Content>
-                    <fa:IconBlock Icon="RotateRight" Foreground="Black" Width="16" Height="16" FontSize="16"/>
+                    <fa:IconBlock x:Name="RefreshIcon" Icon="RotateRight" Foreground="Black" Width="16" Height="16" FontSize="16" RenderTransformOrigin="0.5,0.5">
+                        <fa:IconBlock.RenderTransform>
+                            <RotateTransform x:Name="MyAnimatedTransform" Angle="0" />
+                        </fa:IconBlock.RenderTransform>
+                    </fa:IconBlock>
                 </Button.Content>
             </Button>
             <Button x:Name="Menu" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,90,0"  BorderThickness="0,0,0,0" Click="Menu_Click">
