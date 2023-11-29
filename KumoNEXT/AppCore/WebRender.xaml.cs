@@ -84,6 +84,10 @@ namespace KumoNEXT.AppCore
                 Width = ParsedManifest.Width;
             }
             Title = ParsedManifest.DisplayName;
+            if (ParsedManifest.AllowResize)
+            {
+                this.ResizeMode = ResizeMode.CanResize;
+            }
             if (File.Exists(PkgPath + "icon.png"))
             {
                 Stream imageStreamSource = new FileStream(PkgPath + "icon.png", FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -96,6 +100,11 @@ namespace KumoNEXT.AppCore
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
             WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
             WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
+            if (App.MainConfig.EnableDebug == false)
+            {
+                WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+            }
+            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             //域名白名单机制
             Func<string, bool> CheckWhitelist = (string u) =>
             {

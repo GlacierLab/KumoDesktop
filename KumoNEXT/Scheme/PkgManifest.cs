@@ -47,6 +47,8 @@
         public string[] TrustedDomain { get; set; } = { };
         //主题颜色，决定部分窗体边框和背景色，暂不支持透明色
         public string ThemeColor { get; set; } = "#FFFFFF";
+        //是否允许调整大小，PWA无论此值如何都允许调整大小
+        public bool AllowResize { get; set; } = true;
         //默认窗口宽高
         public int Height { get; set; } = 450;
         public int Width { get; set; } = 800;
