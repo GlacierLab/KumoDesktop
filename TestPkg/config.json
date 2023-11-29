@@ -2,29 +2,34 @@
     "Version": 1,
     "Settings": [
         {
+            "type": "bool",
             "key": "bool",
             "default": true,
             "name": "布尔型",
             "description": "一个布尔型设置"
         },
         {
+            "type": "string",
             "key": "string",
             "default": "琴梨梨",
             "name": "字符串",
             "description": "一个字符串设置"
         },
         {
+            "type": "number",
             "key": "number",
             "default": 114514,
             "name": "数值型",
             "description": "一个数值型设置"
         },
         {
+            "type": "sub",
             "key": "sub",
             "name": "子分类",
             "description": "一个分类",
             "child": [
                 {
+                    "type": "string",
                     "key": "substring",
                     "default": "琴梨梨",
                     "name": "子分类下的字符串",
@@ -33,9 +38,10 @@
             ]
         },
         {
+            "type": "link",
             "key": "link",
             "target": "https://qinlili.bid/",
-            "name": "链接跳转",
+            "name": "链接",
             "description": "一个外部链接"
         }
     ]
