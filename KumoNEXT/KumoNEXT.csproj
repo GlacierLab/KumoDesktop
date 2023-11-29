@@ -18,6 +18,14 @@
     <_SuppressWpfTrimError>true</_SuppressWpfTrimError>
     <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <SignAssembly>False</SignAssembly>
+    <Authors>琴梨梨</Authors>
+    <Company>Glacier Lab</Company>
+    <Product>云酱桌面版</Product>
+    <Copyright>Open Source MPL2.0</Copyright>
+    <PackageProjectUrl>https://github.com/GlacierLab/KumoDesktop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GlacierLab/KumoDesktop</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -26,6 +34,14 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +55,7 @@
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

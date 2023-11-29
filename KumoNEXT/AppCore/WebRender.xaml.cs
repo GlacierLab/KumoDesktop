@@ -1,9 +1,13 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace KumoNEXT.AppCore
 {
@@ -95,6 +99,11 @@ namespace KumoNEXT.AppCore
                 BitmapSource bitmapSource = decoder.Frames[0];
                 this.Icon = bitmapSource;
             }
+            //设置AppID
+            SourceInitialized += (s, e) =>
+    TaskbarManager.Instance.SetApplicationIdForSpecificWindow(
+        new WindowInteropHelper(this).Handle,
+        "Kumo."+ParsedManifest.Name+"."+ new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..]);
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.CoreWebView2.AddHostObjectToScript("ParsedManifest", ParsedManifest);
             WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
