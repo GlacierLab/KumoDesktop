@@ -96,6 +96,8 @@ namespace KumoNEXT.AppCore
                 this.Icon = bitmapSource;
             }
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
+            WebView.CoreWebView2.AddHostObjectToScript("ParsedManifest", ParsedManifest);
+            WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
             WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
@@ -141,7 +143,7 @@ namespace KumoNEXT.AppCore
             {
                 if (e.IsSuccess)
                 {
-                    WebView.CoreWebView2.AddHostObjectToScript("ParsedManifest", ParsedManifest);
+
                 }
                 else
                 {
@@ -153,6 +155,18 @@ namespace KumoNEXT.AppCore
             };
         }
 
-
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowStyle = WindowStyle.None;
+                this.BorderThickness = new Thickness(8);
+            }
+            else
+            {
+                this.BorderThickness = new Thickness(0);
+            }
+        }
     }
 }
