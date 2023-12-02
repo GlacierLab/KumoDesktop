@@ -111,6 +111,9 @@ namespace KumoNEXT.AppCore
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
             WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
             WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
+            WebView.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
+            WebView.CoreWebView2.Settings.IsZoomControlEnabled=false;
+            WebView.CoreWebView2.Settings.IsPinchZoomEnabled=false;
             if (App.MainConfig.EnableDebug == false)
             {
                 WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;

@@ -149,7 +149,7 @@ namespace KumoNEXT
             Launch:
             //初始化WebView组件
             ChangeProgress(90, "准备渲染器...");
-            var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";
+            var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
                 AdditionalBrowserArguments = WebviewArgu
