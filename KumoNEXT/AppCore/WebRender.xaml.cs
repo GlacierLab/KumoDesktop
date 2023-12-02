@@ -52,9 +52,11 @@ namespace KumoNEXT.AppCore
         {
             Init(PkgManifest);
         }
+
         Scheme.PkgManifest? ParsedManifest;
         Scheme.PkgLocalData? ParsedLocalData;
         string PkgPath = "";
+
         private async void Init(Scheme.PkgManifest PkgManifest)
         {
             InitializeComponent();
