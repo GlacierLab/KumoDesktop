@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Windows;
 
 namespace KumoNEXT.AppCore
 {
@@ -6,7 +8,7 @@ namespace KumoNEXT.AppCore
     //每个方法前面的[]内注明了需要请求的权限
     public class KumoBridge
     {
-        Window CurrentWindow;
+        WebRender CurrentWindow;
         public KumoBridge(WebRender Window)
         {
             CurrentWindow = Window;
@@ -50,9 +52,17 @@ namespace KumoNEXT.AppCore
 
 
         //Kumo类方法，云酱运行时相关
+
+        //[]获取运行时版本号，返回整数格式
         public int Kumo_Version()
         {
             return App.MainConfig.RuntimeVersion;
         }
+        //[]获取当前包清单，返回JSON字符串格式
+        public string Kumo_PkgManifest()
+        {
+            return JsonSerializer.Serialize(CurrentWindow.ParsedManifest);
+        }
+        //[]
     }
 }
