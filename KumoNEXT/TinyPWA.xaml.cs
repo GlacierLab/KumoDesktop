@@ -102,7 +102,7 @@ namespace KumoNEXT
         Scheme.PkgLocalData? ParsedLocalData;
         private async void InitWebView(bool NewWindow = false, string? NewWindowLink = null)
         {
-            var WebviewArgu = "--disable-features=msSmartScreenProtection --in-process-gpu --renderer-process-limit=1";
+            var WebviewArgu = "--disable-features=msSmartScreenProtection --in-process-gpu --renderer-process-limit=1 --pull-to-refresh";
             CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
             {
                 AdditionalBrowserArguments = WebviewArgu
@@ -219,10 +219,12 @@ namespace KumoNEXT
                 WindowStyle = WindowStyle.SingleBorderWindow;
                 WindowStyle = WindowStyle.None;
                 this.BorderThickness = new Thickness(8);
+                WebView.Margin= new Thickness(0,30,0,0);
             }
             else
             {
                 this.BorderThickness = new Thickness(0);
+                WebView.Margin = new Thickness(1, 30, 1, 1);
             }
         }
 
