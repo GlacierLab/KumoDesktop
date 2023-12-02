@@ -98,6 +98,22 @@ namespace KumoNEXT
             await EnsurePackage(Argu.package);
             ChangeProgress(65, "准备目标包体...");
             Scheme.PkgManifest ParsedManifest;
+            if (App.MainConfig.EnableDebug && Directory.Exists("Package\\DebugPkg")&& MessageBox.Show("检测到待调试包体，是否直接启动调试包体？", "调试模式", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+            {
+                Argu.package = "DebugPkg";
+                try
+                {
+                    ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(File.OpenRead("Package\\DebugPkg\\manifest.json"));
+                    ParsedManifest.Path = "Package/DebugPkg";
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("待调试包体不可解析，请对照文档检查！", "包体异常");
+                    Environment.Exit(0);
+                    return;
+                }
+                goto Launch;
+            }
             try
             {
                 ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(File.OpenRead("Package\\" + Argu.package.Replace(".", "\\") + "\\manifest.json"));
@@ -130,6 +146,7 @@ namespace KumoNEXT
             Service.ClientCore.Main();
             await Task.Delay(200);
 #endif
+            Launch:
             //初始化WebView组件
             ChangeProgress(90, "准备渲染器...");
             var WebviewArgu = "--disable-features=msSmartScreenProtection --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";

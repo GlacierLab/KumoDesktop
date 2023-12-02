@@ -30,8 +30,8 @@ namespace KumoNEXT.Service
             }
             //新建线程等待新连接
             new Thread(ServerThread).Start();
-            //pipeServer.Close();
-            //ActiveThreads--;
+            pipeServer.Close();
+            ActiveThreads--;
             new Thread(CheckAutoExit).Start();
         }
 
