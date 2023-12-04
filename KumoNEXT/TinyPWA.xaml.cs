@@ -219,7 +219,7 @@ namespace KumoNEXT
                 WindowStyle = WindowStyle.SingleBorderWindow;
                 WindowStyle = WindowStyle.None;
                 this.BorderThickness = new Thickness(8);
-                WebView.Margin= new Thickness(0,30,0,0);
+                WebView.Margin = new Thickness(0, 30, 0, 0);
             }
             else
             {

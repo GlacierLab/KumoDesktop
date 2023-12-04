@@ -98,7 +98,7 @@ namespace KumoNEXT
             await EnsurePackage(Argu.package);
             ChangeProgress(65, "准备目标包体...");
             Scheme.PkgManifest ParsedManifest;
-            if (App.MainConfig.EnableDebug && Directory.Exists("Package\\DebugPkg")&& MessageBox.Show("检测到待调试包体，是否直接启动调试包体？", "调试模式", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+            if (App.MainConfig.EnableDebug && Directory.Exists("Package\\DebugPkg") && MessageBox.Show("检测到待调试包体，是否直接启动调试包体？", "调试模式", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Argu.package = "DebugPkg";
                 try
@@ -147,7 +147,7 @@ namespace KumoNEXT
             Service.ClientCore.Main();
             await Task.Delay(200);
 #endif
-            Launch:
+        Launch:
             //初始化WebView组件
             ChangeProgress(90, "准备渲染器...");
             var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";

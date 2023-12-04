@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KumoNEXT.AppCore
+﻿namespace KumoNEXT.AppCore
 {
     public static class PermissionManager
     {
+        public static bool CheckPackageManagePermission(string ContextPkg, string TargetPkg)
+        {
+            return TargetPkg.StartsWith(ContextPkg);
+        }
     }
 }

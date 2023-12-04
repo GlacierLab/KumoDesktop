@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Windows;
 
 namespace KumoNEXT.AppCore
@@ -69,6 +68,17 @@ namespace KumoNEXT.AppCore
         {
             return JsonSerializer.Serialize(CurrentWindow.ParsedManifest);
         }
-        //[]
+        //[]同步存储的选项，传入Json字符串则保存到本地，传入空白则不处理仅返回。返回Json字符串格式的存储的选项
+        public string Kumo_SyncPreference(string? JsonText)
+        {
+            if (JsonText != null)
+            {
+                CurrentWindow.ParsedLocalData.PreferenceSaved = JsonText;
+            }
+            return CurrentWindow.ParsedLocalData.PreferenceSaved;
+        }
+
+
+        //Package类方法，包管理相关
     }
 }

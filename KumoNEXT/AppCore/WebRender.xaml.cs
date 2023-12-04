@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace KumoNEXT.AppCore
 {
@@ -108,11 +109,10 @@ namespace KumoNEXT.AppCore
             WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
-            WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
             WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
             WebView.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
-            WebView.CoreWebView2.Settings.IsZoomControlEnabled=false;
-            WebView.CoreWebView2.Settings.IsPinchZoomEnabled=false;
+            WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
+            WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
             if (App.MainConfig.EnableDebug == false)
             {
                 WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
@@ -154,7 +154,6 @@ namespace KumoNEXT.AppCore
             {
                 if (e.IsSuccess)
                 {
-
                 }
                 else
                 {
@@ -164,6 +163,7 @@ namespace KumoNEXT.AppCore
                     }
                 }
             };
+            WebView.CoreWebView2.Navigate("https://" + ParsedManifest.Domain + "/" + ParsedManifest.Entry);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -182,9 +182,40 @@ namespace KumoNEXT.AppCore
                 WebView.CoreWebView2.ExecuteScriptAsync("Callback.Window_State?Callback.Window_State(false):null;");
                 WebView.Margin = new Thickness(1, 1, 1, 1);
             }
-            if(this.WindowState == WindowState.Minimized) {
+            if (this.WindowState == WindowState.Minimized)
+            {
                 WebView.CoreWebView2.TrySuspendAsync();
-                    };
+            };
+        }
+
+        bool ReadyToExit = false;
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            if (!ReadyToExit)
+            {
+                e.Cancel = true;
+                if (ParsedManifest.SaveWindowSize)
+                {
+                    ParsedLocalData.Height = (int)Math.Round(Height);
+                    ParsedLocalData.Width = (int)Math.Round(Width);
+                    MinHeight = 30;
+                    Height = 30;
+                }
+                using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
+                await createStream.DisposeAsync();
+                WebView.Dispose();
+                ReadyToExit = true;
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.Close();
+                    }));
+                });
+            }
         }
     }
 }
