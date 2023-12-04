@@ -56,7 +56,7 @@ namespace KumoNEXT.AppCore
 
 
 
-        //Kumo类方法，云酱运行时相关
+        //Kumo类方法，云酱运行时与当前包相关
 
         //[]获取运行时版本号，返回整数格式
         public int Kumo_Version()
@@ -77,8 +77,21 @@ namespace KumoNEXT.AppCore
             }
             return CurrentWindow.ParsedLocalData.PreferenceSaved;
         }
+        //[]打开选项设置窗口，无返回
+        public void Kumo_OpenPreferenceWindow()
+        {
+            //TODO
+            //还在思考怎么实现设置变化的回调
+        }
 
 
         //Package类方法，包管理相关
+
+        //[]获取已安装的子包，返回子包字符串数组
+        public string[] Package_GetInstalledChildPackages()
+        {
+            //TODO
+            return [];
+        }
     }
 }
