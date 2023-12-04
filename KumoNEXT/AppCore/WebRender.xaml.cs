@@ -105,7 +105,6 @@ namespace KumoNEXT.AppCore
                 TaskbarManager.Instance.SetApplicationIdForSpecificWindow(new WindowInteropHelper(this).Handle, "Kumo." + ParsedManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..]);
             };
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
-            WebView.CoreWebView2.AddHostObjectToScript("ParsedManifest", ParsedManifest);
             WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
         PkgPath, CoreWebView2HostResourceAccessKind.DenyCors);
@@ -174,11 +173,18 @@ namespace KumoNEXT.AppCore
                 WindowStyle = WindowStyle.SingleBorderWindow;
                 WindowStyle = WindowStyle.None;
                 this.BorderThickness = new Thickness(8);
+                WebView.CoreWebView2.ExecuteScriptAsync("Callback.Window_State?Callback.Window_State(true):null;");
+                WebView.Margin = new Thickness(0, 0, 0, 0);
             }
             else
             {
                 this.BorderThickness = new Thickness(0);
+                WebView.CoreWebView2.ExecuteScriptAsync("Callback.Window_State?Callback.Window_State(false):null;");
+                WebView.Margin = new Thickness(1, 1, 1, 1);
             }
+            if(this.WindowState == WindowState.Minimized) {
+                WebView.CoreWebView2.TrySuspendAsync();
+                    };
         }
     }
 }

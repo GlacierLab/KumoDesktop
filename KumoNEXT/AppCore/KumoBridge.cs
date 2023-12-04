@@ -48,6 +48,12 @@ namespace KumoNEXT.AppCore
             //TODO
             return 0;
         }
+        //[]打开WebView调试工具，无返回
+        //该方法无视运行时配置的EnableDebug值
+        public void Window_OpenDevTools()
+        {
+            CurrentWindow.WebView.CoreWebView2.OpenDevToolsWindow();
+        }
 
 
 
