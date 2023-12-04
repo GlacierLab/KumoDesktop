@@ -105,6 +105,7 @@ namespace KumoNEXT
                 {
                     ParsedManifest = await JsonSerializer.DeserializeAsync<Scheme.PkgManifest>(File.OpenRead("Package\\DebugPkg\\manifest.json"));
                     ParsedManifest.Path = "Package/DebugPkg";
+                    ParsedManifest.Name = "DebugPkg";
                 }
                 catch (Exception)
                 {
