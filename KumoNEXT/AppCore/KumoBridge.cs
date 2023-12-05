@@ -1,5 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace KumoNEXT.AppCore
 {
@@ -85,19 +87,26 @@ namespace KumoNEXT.AppCore
         //[]打开选项设置窗口，无返回
         //设置窗口关闭后回调同步设置
         //设置窗口只会打开一个，重复调用不会打开更多
-        private bool PreferenceWindowOpened = false;
+        [DllImport("user32")] public static extern int FlashWindow(IntPtr hwnd, bool bInvert);
+        private Preference? PreferenceWindowOpened = null;
         public void Kumo_OpenPreferenceWindow()
         {
-            if (!PreferenceWindowOpened)
+            if (PreferenceWindowOpened==null)
             {
                 var PreferenceWindow = new Preference(CurrentWindow.ParsedManifest, ref CurrentWindow.ParsedLocalData);
                 PreferenceWindow.Closed += (o, e) =>
                 {
-                    PreferenceWindowOpened = false;
+                    PreferenceWindowOpened = null;
                     CurrentWindow.WebView.CoreWebView2.ExecuteScriptAsync("Callback.Preference_Change?Callback.Preference_Change():null;");
                 };
-                PreferenceWindowOpened = true;
+                PreferenceWindowOpened = PreferenceWindow;
                 PreferenceWindow.Show();
+            }
+            else
+            {
+                PreferenceWindowOpened.Focus();
+                WindowInteropHelper wih = new WindowInteropHelper(PreferenceWindowOpened);
+                FlashWindow(wih.Handle, true);
             }
         }
 
