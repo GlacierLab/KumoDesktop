@@ -78,9 +78,15 @@ namespace KumoNEXT.AppCore
             return CurrentWindow.ParsedLocalData.PreferenceSaved;
         }
         //[]打开选项设置窗口，无返回
+        //设置窗口关闭后回调同步设置
         public void Kumo_OpenPreferenceWindow()
         {
-            new Preference(CurrentWindow.ParsedManifest.Name).ShowDialog();
+            var PreferenceWindow = new Preference(CurrentWindow.ParsedManifest.Name, ref CurrentWindow.ParsedLocalData);
+            PreferenceWindow.Closed += (o, e) =>
+            {
+                CurrentWindow.WebView.CoreWebView2.ExecuteScriptAsync("Callback.Preference_Change?Callback.Preference_Change():null;");
+            };
+            PreferenceWindow.Show();
         }
 
 

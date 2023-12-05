@@ -36,7 +36,7 @@ namespace KumoNEXT
         }
         private async void InitAsync(Scheme.LaunchArgu Argu)
         {
-
+            await Task.Delay(1);
             Progress.IsIndeterminate = false;
             //解析启动参数
             ChangeProgress(0, "解析启动参数...");
@@ -79,7 +79,6 @@ namespace KumoNEXT
             }
 #if DEBUG
             Console.WriteLine("Main Config:" + JsonSerializer.Serialize(App.MainConfig));
-            await Task.Delay(200);
 #endif
             //检查是否存在必要的包
             ChangeProgress(10, "准备核心包体...");
@@ -137,7 +136,6 @@ namespace KumoNEXT
                 return;
             }
 #if DEBUG
-            await Task.Delay(200);
             //初始化IPC服务进程，目前暂不启用，后期会支持跨进程任务传递和后台任务
             ChangeProgress(70, "检查服务进程...");
             if (!File.Exists(@"\\.\pipe\KumoDesktop"))
@@ -158,7 +156,6 @@ namespace KumoNEXT
             Directory.CreateDirectory(Environment.CurrentDirectory + @"\WebviewCache\App\");
             App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\WebviewCache\\App\\", options);
 #if DEBUG
-            await Task.Delay(200);
 #endif
             new AppCore.WebRender(ParsedManifest).Show();
             ChangeProgress(100, "准备就绪");

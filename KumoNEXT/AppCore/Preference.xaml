@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:KumoNEXT"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="KumoNEXT.AppCore.Preference"
         mc:Ignorable="d"
-        Title="Preference" Height="450" Width="800" WindowStyle="None" ResizeMode="CanResize" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="Preference" Height="450" Width="800" WindowStyle="None" ResizeMode="CanResize" Closing="Window_Closing" WindowStartupLocation="CenterScreen" >
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="1" CaptionHeight="0"></WindowChrome>
     </WindowChrome.WindowChrome>
     <Grid>
 
-        <Wpf:WebView2 x:Name="WebView" Margin="1,1,1,1"/>
+        <Wpf:WebView2 x:Name="WebView" Margin="1,1,1,1" Loaded="WebView_Loaded"/>
 
     </Grid>
 </Window>

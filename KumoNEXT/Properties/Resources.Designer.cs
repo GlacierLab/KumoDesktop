@@ -61,6 +61,42 @@ namespace KumoNEXT.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///
+        ///&lt;head&gt;
+        ///  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+        ///  &lt;style&gt;
+        ///    /*基础*/
+        ///    * {
+        ///      user-select: none;
+        ///      box-sizing: border-box;
+        ///    }
+        ///
+        ///    body {
+        ///      margin: 0px;
+        ///    }
+        ///
+        ///    /*标题栏*/
+        ///    .title-bar {
+        ///      background-color: white;
+        ///      width: 100%;
+        ///      height: 28px;
+        ///      position: fixed;
+        ///      top: 0px;
+        ///      left: 0px;
+        ///      app-region: drag;
+        ///      display: flex;
+        ///      flex-direction: row;
+        ///      justify-content: space-between;
+        ///    } [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Preference {
+            get {
+                return ResourceManager.GetString("Preference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!doctype html&gt;
         ///&lt;html&gt;
         ///
@@ -68,6 +104,7 @@ namespace KumoNEXT.Properties {
         ///    &lt;meta charset=&quot;utf-8&quot;&gt;
         ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
         ///    &lt;meta content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0&quot; name=&quot;viewport&quot; /&gt;
+        ///    &lt;title&gt;加载失败&lt;/title&gt;
         ///    &lt;style&gt;
         ///        * {
         ///            font-family: &quot;DengXian&quot;, &quot;Microsoft YaHei&quot;;
@@ -77,7 +114,7 @@ namespace KumoNEXT.Properties {
         ///
         ///        .btn {
         ///            background-color: white;
-        ///            transition: background-color 0. [rest of string was truncated]&quot;;.
+        ///            transi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PWA_Error {
             get {

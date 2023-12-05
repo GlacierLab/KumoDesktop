@@ -19,26 +19,44 @@ namespace KumoNEXT.AppCore
     /// </summary>
     public partial class Preference : Window
     {
-        public Preference(string PkgName)
+        string PkgName;
+        Scheme.PkgLocalData[] ParsedLocalData=new Scheme.PkgLocalData[1];
+        public Preference(string Name,ref Scheme.PkgLocalData LocalData)
         {
             InitializeComponent();
+            PkgName= Name;
+            ParsedLocalData[0] = LocalData;
         }
+
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }
 
-        private class PreferenceBridge
+        public class PreferenceBridge
         {
-            public PreferenceBridge()
+            Preference Window;
+            public PreferenceBridge(Preference Window)
             {
+                this.Window = Window;
+            }
 
+            public void Close()
+            {
+                Window.Close();
             }
             public string ReadPreference()
             {
                 return "";
             }
+        }
+        private async void WebView_Loaded(object sender, RoutedEventArgs e)
+        {
+            await WebView.EnsureCoreWebView2Async(App.WebView2Environment).ConfigureAwait(true);
+            WebView.CoreWebView2.AddHostObjectToScript("PreferenceBridge", new PreferenceBridge(this));
+            WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference);
         }
     }
 }
