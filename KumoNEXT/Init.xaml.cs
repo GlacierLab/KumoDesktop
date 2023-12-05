@@ -97,7 +97,7 @@ namespace KumoNEXT
             await EnsurePackage(Argu.package);
             ChangeProgress(65, "准备目标包体...");
             Scheme.PkgManifest ParsedManifest;
-            if (App.MainConfig.EnableDebug && Directory.Exists("Package\\DebugPkg") && MessageBox.Show("检测到待调试包体，是否直接启动调试包体？", "调试模式", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (App.MainConfig.EnableDebug && Directory.Exists("Package\\DebugPkg") && MessageBox.Show("检测到待调试包体，是否直接启动调试包体？", "调试模式", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
             {
                 Argu.package = "DebugPkg";
                 try
@@ -120,7 +120,7 @@ namespace KumoNEXT
             }
             catch (Exception)
             {
-                var result = MessageBox.Show(Argu.package + "包体信息无法解析，是否打开更新模块尝试修复？", "包体异常", MessageBoxButton.YesNo);
+                var result = MessageBox.Show(Argu.package + "包体信息无法解析，是否打开更新模块尝试修复？", "包体异常", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
                 if (result == MessageBoxResult.Yes)
                 {
                     Process.Start(Environment.ProcessPath, "--type=ui --package=CorePkg.Update");
