@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace KumoNEXT.AppCore
 {
@@ -20,11 +8,11 @@ namespace KumoNEXT.AppCore
     public partial class Preference : Window
     {
         string PkgName;
-        Scheme.PkgLocalData[] ParsedLocalData=new Scheme.PkgLocalData[1];
-        public Preference(string Name,ref Scheme.PkgLocalData LocalData)
+        Scheme.PkgLocalData[] ParsedLocalData = new Scheme.PkgLocalData[1];
+        public Preference(string Name, ref Scheme.PkgLocalData LocalData)
         {
             InitializeComponent();
-            PkgName= Name;
+            PkgName = Name;
             ParsedLocalData[0] = LocalData;
         }
 

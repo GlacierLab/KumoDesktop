@@ -38,6 +38,11 @@ namespace KumoNEXT.AppCore
             CurrentWindow.Height = Height;
             return [(int)Math.Round(CurrentWindow.Width), (int)Math.Round(CurrentWindow.Height)];
         }
+        //[]设置窗口标题，无返回
+        public void Window_Title(string Title)
+        {
+            CurrentWindow.Title = Title;
+        }
         //[AlwaysTop]请求窗口置顶，返回置顶状态
         //0:取消置顶
         //1:进入置顶
