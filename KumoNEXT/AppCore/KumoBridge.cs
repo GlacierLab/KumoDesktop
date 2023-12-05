@@ -80,8 +80,7 @@ namespace KumoNEXT.AppCore
         //[]打开选项设置窗口，无返回
         public void Kumo_OpenPreferenceWindow()
         {
-            //TODO
-            //还在思考怎么实现设置变化的回调
+            new Preference(CurrentWindow.ParsedManifest.Name).ShowDialog();
         }
 
 
