@@ -51,12 +51,21 @@ namespace KumoNEXT.AppCore
 
         public WebRender(Scheme.PkgManifest PkgManifest)
         {
+            AppID = "Kumo." + ParsedManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..];
             Init(PkgManifest);
+        }
+        public WebRender(Scheme.PkgManifest PkgManifest,string ID,string Entry)
+        {
+            AppID = ID;
+            Init(PkgManifest);
+            //TODO
+            //单一包多窗口扩展实现
         }
 
         public Scheme.PkgManifest? ParsedManifest;
         public Scheme.PkgLocalData? ParsedLocalData;
         string PkgPath = "";
+        string AppID = "Kumo.Init";
 
         private async void Init(Scheme.PkgManifest PkgManifest)
         {
@@ -105,7 +114,7 @@ namespace KumoNEXT.AppCore
             //设置AppID
             SourceInitialized += (s, e) =>
             {
-                TaskbarManager.Instance.SetApplicationIdForSpecificWindow(new WindowInteropHelper(this).Handle, "Kumo." + ParsedManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..]);
+                TaskbarManager.Instance.SetApplicationIdForSpecificWindow(new WindowInteropHelper(this).Handle, AppID);
             };
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
