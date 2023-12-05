@@ -66,7 +66,9 @@ namespace KumoNEXT.AppCore
             //读取配置文件
             try
             {
-                ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json"));
+                var FileStream=File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
+                ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
+                FileStream.Dispose();
             }
             catch (Exception)
             {
@@ -202,7 +204,15 @@ namespace KumoNEXT.AppCore
                     MinHeight = 30;
                     Height = 30;
                 }
-                using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                FileStream? createStream=null;
+                if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
+                {
+                   createStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
+                }
+                else
+                {
+                    createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                }
                 await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
                 await createStream.DisposeAsync();
                 WebView.Dispose();

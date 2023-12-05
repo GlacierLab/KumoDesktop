@@ -90,7 +90,7 @@ namespace KumoNEXT.AppCore
         {
             if (!PreferenceWindowOpened)
             {
-                var PreferenceWindow = new Preference(CurrentWindow.ParsedManifest.Name, ref CurrentWindow.ParsedLocalData);
+                var PreferenceWindow = new Preference(CurrentWindow.ParsedManifest, ref CurrentWindow.ParsedLocalData);
                 PreferenceWindow.Closed += (o, e) =>
                 {
                     PreferenceWindowOpened = false;

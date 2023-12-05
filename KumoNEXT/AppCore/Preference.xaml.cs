@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace KumoNEXT.AppCore
 {
@@ -7,13 +9,20 @@ namespace KumoNEXT.AppCore
     /// </summary>
     public partial class Preference : Window
     {
-        string PkgName;
+        Scheme.PkgManifest? ParsedManifest;
         Scheme.PkgLocalData[] ParsedLocalData = new Scheme.PkgLocalData[1];
-        public Preference(string Name, ref Scheme.PkgLocalData LocalData)
+        public Preference(Scheme.PkgManifest Manifest, ref Scheme.PkgLocalData LocalData)
         {
             InitializeComponent();
-            PkgName = Name;
+            ParsedManifest = Manifest;
             ParsedLocalData[0] = LocalData;
+            Title = "设置-" + Manifest.DisplayName;
+            //渲染设置图标
+            var SettingsIcon=this.FindResource("settings") as DrawingImage; DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawImage(SettingsIcon, new Rect(0, 0, 512, 512));
+            }
         }
 
 
