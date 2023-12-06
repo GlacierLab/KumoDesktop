@@ -97,6 +97,25 @@ namespace KumoNEXT.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///    &lt;script&gt;
+        ///        console.log(&quot;Headless Page&quot;);
+        ///    &lt;/script&gt;
+        ///&lt;/body&gt;
+        ///
+        ///&lt;/html&gt;.
+        /// </summary>
+        internal static string PreferenceUpgradeHeadless {
+            get {
+                return ResourceManager.GetString("PreferenceUpgradeHeadless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!doctype html&gt;
         ///&lt;html&gt;
         ///

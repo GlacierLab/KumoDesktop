@@ -15,8 +15,8 @@ namespace KumoNEXT.AppCore
     /// </summary>
     public partial class Preference : Window
     {
-        Scheme.PkgManifest? ParsedManifest;
-        Scheme.PkgLocalData[] ParsedLocalData = new Scheme.PkgLocalData[1];
+        public Scheme.PkgManifest? ParsedManifest;
+        public Scheme.PkgLocalData[] ParsedLocalData = new Scheme.PkgLocalData[1];
 
 
         public Preference(Scheme.PkgManifest Manifest, ref Scheme.PkgLocalData LocalData)

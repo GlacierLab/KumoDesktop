@@ -121,6 +121,9 @@
   <data name="Preference" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\EmbedPages\Preference.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
+  <data name="PreferenceUpgradeHeadless" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\EmbedPages\PreferenceUpgradeHeadless.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
   <data name="PWA_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\EmbedPages\PWA_Error.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>

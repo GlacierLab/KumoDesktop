@@ -1,5 +1,7 @@
-﻿using KumoNEXT.Scheme;
+﻿using KumoNEXT.AppCore;
+using KumoNEXT.Scheme;
 using KumoNEXT.Utils;
+using Microsoft.Web.WebView2.Core;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -160,7 +162,7 @@ namespace KumoNEXT
             if (!File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
             {
                 using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                var SaveObj=new Scheme.PkgLocalData();
+                var SaveObj = new Scheme.PkgLocalData();
                 SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
                 await JsonSerializer.SerializeAsync(createStream, SaveObj);
                 await createStream.DisposeAsync();
@@ -171,9 +173,9 @@ namespace KumoNEXT
                 {
                     var FileStream = File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
                     var SaveObj = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
-                    SaveObj =await UpgradeConfig(ParsedManifest.Name,  SaveObj);
+                    SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
                     await FileStream.DisposeAsync();
-                    FileStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json"); 
+                    FileStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
                     JsonSerializer.Serialize(FileStream, SaveObj);
                     await FileStream.DisposeAsync();
                 }
@@ -207,10 +209,30 @@ namespace KumoNEXT
 
         //根据config文件变化升级现有的设置
         //对于现有设置中不存在但config文件中存在的选项，统一添加默认值
-        private async static Task<PkgLocalData> UpgradeConfig(string name, PkgLocalData saveObj)
+        public async static Task<PkgLocalData> UpgradeConfig(string name, PkgLocalData saveObj)
         {
-            //TODO
             //在C#里写不定类型的JSON解析太麻烦了，WebView套壳走起！
+            CoreWebView2Controller browserController;
+            IntPtr HWND_MESSAGE = new IntPtr(-3);
+            await App.InitAppWebView();
+            browserController = await App.WebView2Environment.CreateCoreWebView2ControllerAsync(HWND_MESSAGE);
+            var Bridge = new PreferenceBridge(name);
+            browserController.CoreWebView2.AddHostObjectToScript("PreferenceBridge", Bridge);
+            browserController.CoreWebView2.OpenDevToolsWindow();
+            var tcs = new TaskCompletionSource<bool>();
+            Bridge.Callback = () =>
+            {
+                tcs.TrySetResult(true);
+                Console.WriteLine("Job Done");
+            };
+            browserController.CoreWebView2.NavigationCompleted += (o, e) =>
+            {
+                Console.WriteLine("Headless Page Loaded");
+            };
+            Console.WriteLine("Try Load Headless Page");
+            browserController.CoreWebView2.NavigateToString(Properties.Resources.PreferenceUpgradeHeadless);
+            await tcs.Task;
+
             return saveObj;
         }
 

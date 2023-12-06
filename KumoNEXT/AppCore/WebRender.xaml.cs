@@ -88,6 +88,7 @@ namespace KumoNEXT.AppCore
                     createStream.Dispose();
                 }
             }
+            await PackageManager.UpgradeConfig(ParsedManifest.Name, ParsedLocalData);
             //设置窗口大小
             if (ParsedLocalData.Height > 0 && ParsedLocalData.Width > 0 && ParsedManifest.SaveWindowSize)
             {
