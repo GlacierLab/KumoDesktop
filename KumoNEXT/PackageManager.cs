@@ -162,34 +162,11 @@ namespace KumoNEXT
             if (!File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
             {
                 using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                var SaveObj = new Scheme.PkgLocalData();
-                SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
-                await JsonSerializer.SerializeAsync(createStream, SaveObj);
+                await JsonSerializer.SerializeAsync(createStream, new Scheme.PkgLocalData());
                 await createStream.DisposeAsync();
             }
-            else
-            {
-                try
-                {
-                    var FileStream = File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
-                    var SaveObj = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
-                    SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
-                    await FileStream.DisposeAsync();
-                    FileStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
-                    JsonSerializer.Serialize(FileStream, SaveObj);
-                    await FileStream.DisposeAsync();
-                }
-                catch (Exception)
-                {
-                    var SaveObj = new Scheme.PkgLocalData();
-                    SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
-                    using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                    {
-                        JsonSerializer.Serialize(createStream, SaveObj);
-                        await createStream.DisposeAsync();
-                    }
-                }
-            }
+            //升级配置文件
+            await UpgradeConfig(ParsedManifest.Name);
             //解压到目录
             Directory.CreateDirectory("Package\\" + ParsedManifest.Path);
             await Task.Run(() => PackageFile.ExtractToDirectory("Package\\" + ParsedManifest.Path, true));
@@ -209,7 +186,7 @@ namespace KumoNEXT
 
         //根据config文件变化升级现有的设置
         //对于现有设置中不存在但config文件中存在的选项，统一添加默认值
-        public async static Task<PkgLocalData> UpgradeConfig(string name, PkgLocalData saveObj)
+        public async static Task<PkgLocalData> UpgradeConfig(string name)
         {
             //在C#里写不定类型的JSON解析太麻烦了，WebView套壳走起！
             CoreWebView2Controller browserController;
@@ -223,13 +200,11 @@ namespace KumoNEXT
             Bridge.Callback = () =>
             {
                 tcs.TrySetResult(true);
-                Console.WriteLine("Job Done");
+                Console.WriteLine("WebView Job Done");
             };
             browserController.CoreWebView2.NavigationCompleted += (o, e) =>
             {
-                Console.WriteLine("Headless Page Loaded");
             };
-            Console.WriteLine("Try Load Headless Page");
             browserController.CoreWebView2.NavigateToString(Properties.Resources.PreferenceUpgradeHeadless);
             await tcs.Task;
 
