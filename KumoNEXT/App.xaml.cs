@@ -44,6 +44,7 @@ namespace KumoNEXT
                 WebView2Environment.BrowserProcessExited += (o,e)=> {
                     Console.WriteLine("WebView Environment Dead");
                     WebView2Environment = null;
+                    InitAppWebView();
                 };
             }
         }

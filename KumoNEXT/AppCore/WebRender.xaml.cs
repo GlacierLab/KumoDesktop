@@ -75,12 +75,14 @@ namespace KumoNEXT.AppCore
             //读取配置文件
             try
             {
-                var FileStream=File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
-                ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
-                FileStream.Dispose();
+                using Stream JsonStream=File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
+                {
+                    ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(JsonStream);
+                    JsonStream.Dispose();
+                }
             }
             catch (Exception)
-            {
+            {              
                 ParsedLocalData = new Scheme.PkgLocalData();
                 using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
                 {
