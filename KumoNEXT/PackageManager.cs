@@ -186,7 +186,7 @@ namespace KumoNEXT
 
         //根据config文件变化升级现有的设置
         //对于现有设置中不存在但config文件中存在的选项，统一添加默认值
-        public async static Task<PkgLocalData> UpgradeConfig(string name)
+        public async static Task UpgradeConfig(string name)
         {
             //在C#里写不定类型的JSON解析太麻烦了，WebView套壳走起！
             CoreWebView2Controller browserController;
@@ -207,8 +207,6 @@ namespace KumoNEXT
             };
             browserController.CoreWebView2.NavigateToString(Properties.Resources.PreferenceUpgradeHeadless);
             await tcs.Task;
-
-            return saveObj;
         }
 
         public static int Update(string PkgName)

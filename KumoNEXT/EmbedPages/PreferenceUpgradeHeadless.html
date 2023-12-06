@@ -4,8 +4,10 @@
 </head>
 <body>
     <script>
-        chrome.webview.hostObjects.sync.PreferenceBridge.WriteConsole("Headless Page");
-        setTimeout(() => { chrome.webview.hostObjects.sync.PreferenceBridge.JobDone() },2000)
+        chrome.webview.hostObjects.sync.PreferenceBridge.WriteConsole("Headless Page Loaded");
+        //setTimeout(() => { chrome.webview.hostObjects.sync.PreferenceBridge.JobDone() },2000)
+        const config = JSON.parse(chrome.webview.hostObjects.sync.PreferenceBridge.ReadConfig());
+        const current_preference=
     </script>
 </body>
 

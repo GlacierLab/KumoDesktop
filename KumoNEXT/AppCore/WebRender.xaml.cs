@@ -88,7 +88,7 @@ namespace KumoNEXT.AppCore
                     createStream.Dispose();
                 }
             }
-            await PackageManager.UpgradeConfig(ParsedManifest.Name, ParsedLocalData);
+            await PackageManager.UpgradeConfig(ParsedManifest.Name);
             //设置窗口大小
             if (ParsedLocalData.Height > 0 && ParsedLocalData.Width > 0 && ParsedManifest.SaveWindowSize)
             {
@@ -117,6 +117,7 @@ namespace KumoNEXT.AppCore
             {
                 TaskbarManager.Instance.SetApplicationIdForSpecificWindow(new WindowInteropHelper(this).Handle, AppID);
             };
+            await App.InitAppWebView();
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment);
             WebView.CoreWebView2.AddHostObjectToScript("KumoBridge", new KumoBridge(this));
             WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(ParsedManifest.Domain,
