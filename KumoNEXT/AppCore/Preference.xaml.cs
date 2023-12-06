@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -16,9 +17,11 @@ namespace KumoNEXT.AppCore
     {
         Scheme.PkgManifest? ParsedManifest;
         Scheme.PkgLocalData[] ParsedLocalData = new Scheme.PkgLocalData[1];
+
+
         public Preference(Scheme.PkgManifest Manifest, ref Scheme.PkgLocalData LocalData)
         {
-            InitializeComponent();
+            InitializeComponent(); 
             ParsedManifest = Manifest;
             ParsedLocalData[0] = LocalData;
             Title = "设置-" + Manifest.DisplayName;
@@ -50,37 +53,23 @@ namespace KumoNEXT.AppCore
             {
                 TaskbarManager.Instance.SetApplicationIdForSpecificWindow(new WindowInteropHelper(this).Handle, "Kumo." + ParsedManifest.Name + "Settings");
             };
+            AsyncInit();
         }
 
-
+        private async void AsyncInit()
+        {
+            await WebView.EnsureCoreWebView2Async(App.WebView2Environment).ConfigureAwait(true);
+            WebView.CoreWebView2.AddHostObjectToScript("PreferenceBridge", new PreferenceBridge(this));
+            WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference); 
+            WebView.CoreWebView2.OpenDevToolsWindow();
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }
 
-        public class PreferenceBridge
-        {
-            Preference Window;
-            public PreferenceBridge(Preference Window)
-            {
-                this.Window = Window;
-            }
 
-            public void Close()
-            {
-                Window.Close();
-            }
-            public string ReadPreference()
-            {
-                return "";
-            }
-        }
-        private async void WebView_Loaded(object sender, RoutedEventArgs e)
-        {
-            await WebView.EnsureCoreWebView2Async(App.WebView2Environment).ConfigureAwait(true);
-            WebView.CoreWebView2.AddHostObjectToScript("PreferenceBridge", new PreferenceBridge(this));
-            WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference);
-        }
+
     }
 }
