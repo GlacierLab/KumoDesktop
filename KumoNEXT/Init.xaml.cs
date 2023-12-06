@@ -148,13 +148,7 @@ namespace KumoNEXT
         Launch:
             //初始化WebView组件
             ChangeProgress(90, "准备渲染器...");
-            var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";
-            CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
-            {
-                AdditionalBrowserArguments = WebviewArgu
-            };
-            Directory.CreateDirectory(Environment.CurrentDirectory + @"\WebviewCache\App\");
-            App.WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\WebviewCache\\App\\", options);
+            await App.InitAppWebView();
 #if DEBUG
 #endif
             new AppCore.WebRender(ParsedManifest).Show();

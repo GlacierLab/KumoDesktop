@@ -13,7 +13,7 @@ namespace KumoNEXT
     public partial class App : Application
     {
         //WebView2运行时为整个进程共享
-        //安全级别相同的包可以运行在同一进程下
+        //安全级别相同的包可以运行在同一进程下，但这得等到进程间通信写完再说，先挖一个坑在这里
         public static CoreWebView2Environment? WebView2Environment;
         //0-无安全措施，适用于可信任的包，无进程/目录隔离，无沙盒，可跨域，无限制调用本地API
         //1-标准安全措施，适用于大部分扩展包，无进程/目录隔离，启用沙盒，禁止跨域，调用受限API需请求权限
@@ -23,6 +23,27 @@ namespace KumoNEXT
         public static Scheme.LaunchArgu? ParsedArgu;
         //配置文件
         public static Scheme.MainConfig? MainConfig;
+
+        //载入常规的WebView环境
+        public async static Task InitAppWebView()
+        {
+            if (WebView2Environment != null)
+            {
+                //避免重复初始化
+                return;
+            }
+            else
+            {
+                var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";
+                CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
+                {
+                    AdditionalBrowserArguments = WebviewArgu
+                };
+                Directory.CreateDirectory(Environment.CurrentDirectory + @"\WebviewCache\App\");
+                WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\WebviewCache\\App\\", options);
+            }
+        }
+
 
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public void InitializeComponent(params string[] Args)

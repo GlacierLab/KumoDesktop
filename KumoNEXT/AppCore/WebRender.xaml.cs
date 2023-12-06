@@ -51,7 +51,7 @@ namespace KumoNEXT.AppCore
 
         public WebRender(Scheme.PkgManifest PkgManifest)
         {
-            AppID = "Kumo." + ParsedManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..];
+            AppID = "Kumo." + PkgManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..];
             Init(PkgManifest);
         }
         public WebRender(Scheme.PkgManifest PkgManifest,string ID,string Entry)
