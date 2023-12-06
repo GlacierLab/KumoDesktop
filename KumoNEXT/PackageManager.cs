@@ -160,8 +160,33 @@ namespace KumoNEXT
             if (!File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
             {
                 using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                await JsonSerializer.SerializeAsync(createStream, new Scheme.PkgLocalData());
+                var SaveObj=new Scheme.PkgLocalData();
+                SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
+                await JsonSerializer.SerializeAsync(createStream, SaveObj);
                 await createStream.DisposeAsync();
+            }
+            else
+            {
+                try
+                {
+                    var FileStream = File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
+                    var SaveObj = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
+                    SaveObj =await UpgradeConfig(ParsedManifest.Name,  SaveObj);
+                    await FileStream.DisposeAsync();
+                    FileStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json"); 
+                    JsonSerializer.Serialize(FileStream, SaveObj);
+                    await FileStream.DisposeAsync();
+                }
+                catch (Exception)
+                {
+                    var SaveObj = new Scheme.PkgLocalData();
+                    SaveObj = await UpgradeConfig(ParsedManifest.Name, SaveObj);
+                    using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                    {
+                        JsonSerializer.Serialize(createStream, SaveObj);
+                        await createStream.DisposeAsync();
+                    }
+                }
             }
             //解压到目录
             Directory.CreateDirectory("Package\\" + ParsedManifest.Path);
@@ -179,6 +204,16 @@ namespace KumoNEXT
             }
             return 100;
         }
+
+        //根据config文件变化升级现有的设置
+        //对于现有设置中不存在但config文件中存在的选项，统一添加默认值
+        private async static Task<PkgLocalData> UpgradeConfig(string name, PkgLocalData saveObj)
+        {
+            //TODO
+            //在C#里写不定类型的JSON解析太麻烦了，WebView套壳走起！
+            return saveObj;
+        }
+
         public static int Update(string PkgName)
         {
             return 0;
