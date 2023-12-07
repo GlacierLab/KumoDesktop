@@ -5,10 +5,26 @@
 <body>
     <script>
         chrome.webview.hostObjects.sync.PreferenceBridge.WriteConsole("Headless Page Loaded");
-        //setTimeout(() => { chrome.webview.hostObjects.sync.PreferenceBridge.JobDone() },2000)
         const config = JSON.parse(chrome.webview.hostObjects.sync.PreferenceBridge.ReadConfig());
-        const current_preference = JSON.parse(chrome.webview.hostObjects.sync.PreferenceBridge.ReadPreference());
-
+        let current_preference = {};
+        try {
+            current_preference=JSON.parse(chrome.webview.hostObjects.sync.PreferenceBridge.ReadPreference());
+        } catch (e) {
+        }
+        const parse_config = list => {
+            list.forEach(ele => {
+                if (ele.type == "sub") {
+                    parse_config(ele.child);
+                } else {
+                    if (!current_preference[ele.key]) {
+                        current_preference[ele.key] = ele.default;
+                    }
+                }
+            })
+        };
+        parse_config(config.Settings);
+        chrome.webview.hostObjects.sync.PreferenceBridge.WritePreference(JSON.stringify(current_preference));
+        chrome.webview.hostObjects.sync.PreferenceBridge.JobDone();
     </script>
 </body>
 

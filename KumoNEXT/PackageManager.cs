@@ -195,7 +195,7 @@ namespace KumoNEXT
             browserController = await App.WebView2Environment.CreateCoreWebView2ControllerAsync(HWND_MESSAGE);
             var Bridge = new PreferenceBridge(name);
             browserController.CoreWebView2.AddHostObjectToScript("PreferenceBridge", Bridge);
-            browserController.CoreWebView2.OpenDevToolsWindow();
+            //browserController.CoreWebView2.OpenDevToolsWindow();
             var tcs = new TaskCompletionSource<bool>();
             Bridge.Callback = () =>
             {
