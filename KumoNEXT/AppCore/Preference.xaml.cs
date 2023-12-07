@@ -73,10 +73,17 @@ namespace KumoNEXT.AppCore
             WebView.CoreWebView2.OpenDevToolsWindow();
         }
 
+
+
         //同步设置后再关闭窗口
+        public bool ReadyToClose = false;
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            if (!ReadyToClose)
+            {
+                e.Cancel= true;
+                WebView.CoreWebView2.ExecuteScriptAsync("Callback.SaveClose();");
+            }
         }
 
 

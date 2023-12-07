@@ -37,6 +37,7 @@ namespace KumoNEXT.AppCore
         {
             if (Window != null)
             {
+                Window.ReadyToClose = true;
                 Window.Close();
             }
         }

@@ -266,6 +266,10 @@
             document.getElementById("btn-back").addEventListener("click", () => {
                 document.getElementById("settings-area").removeChild(blocks.pop());
             })
+            window.Callback.SaveClose = async () => {
+                await chrome.webview.hostObjects.PreferenceBridge.WritePreference(JSON.stringify(current_preference));
+                await chrome.webview.hostObjects.PreferenceBridge.Close();
+            }
         })
     </script>
 </body>
