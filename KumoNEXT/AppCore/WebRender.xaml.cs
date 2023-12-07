@@ -202,41 +202,50 @@ namespace KumoNEXT.AppCore
             };
         }
 
+        public bool ExitFromBridge =false;
         bool ReadyToExit = false;
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.Hide();
-            if (!ReadyToExit)
+            //触发WebView关闭回调，只有WebView可以发起主动关闭
+            if (!ExitFromBridge)
             {
-                e.Cancel = true;
-                if (ParsedManifest.SaveWindowSize)
+                await WebView.CoreWebView2.ExecuteScriptAsync("Callback.Window_Close?Callback.Window_Close():chrome.webview.hostObjects.KumoBridge.Window_Close();");
+            }
+            else
+            {
+                this.Hide();
+                if (!ReadyToExit)
                 {
-                    ParsedLocalData.Height = (int)Math.Round(Height);
-                    ParsedLocalData.Width = (int)Math.Round(Width);
-                    MinHeight = 30;
-                    Height = 30;
-                }
-                FileStream? createStream=null;
-                if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
-                {
-                   createStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
-                }
-                else
-                {
-                    createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                }
-                await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
-                await createStream.DisposeAsync();
-                WebView.Dispose();
-                ReadyToExit = true;
-                Task.Run(async () =>
-                {
-                    await Task.Delay(1);
-                    Dispatcher.BeginInvoke(new Action(() =>
+                    e.Cancel = true;
+                    if (ParsedManifest.SaveWindowSize)
                     {
-                        this.Close();
-                    }));
-                });
+                        ParsedLocalData.Height = (int)Math.Round(Height);
+                        ParsedLocalData.Width = (int)Math.Round(Width);
+                        MinHeight = 30;
+                        Height = 30;
+                    }
+                    FileStream? createStream = null;
+                    if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
+                    {
+                        createStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
+                    }
+                    else
+                    {
+                        createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
+                    }
+                    await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
+                    await createStream.DisposeAsync();
+                    WebView.Dispose();
+                    ReadyToExit = true;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1);
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            this.Close();
+                        }));
+                    });
+                }
             }
         }
     }
