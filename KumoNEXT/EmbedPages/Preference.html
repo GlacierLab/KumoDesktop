@@ -1,104 +1,273 @@
-<html>
+﻿<html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <style>
-    /*����*/
-    * {
-      user-select: none;
-      box-sizing: border-box;
-    }
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        /*滚动条*/
+        ::-webkit-scrollbar {
+            height: 12px;
+            width: 8px;
+            background: transparent;
+            z-index: 12;
+            overflow: visible;
+        }
 
-    body {
-      margin: 0px;
-    }
+        ::-webkit-scrollbar-thumb {
+            width: 10px;
+            background-color: #DFAEFF;
+            z-index: 12;
+            border: 3px solid rgba(0, 0, 0, 0);
+            background-clip: padding-box;
+            transition: background-color .32s ease-in-out;
+            margin: 4px;
+            min-height: 32px;
+            min-width: 32px;
+        }
 
-    /*������*/
-    .title-bar {
-      background-color: white;
-      width: 100%;
-      height: 28px;
-      position: fixed;
-      top: 0px;
-      left: 0px;
-      app-region: drag;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #DFAEFF;
+        }
 
-    .title-btn {
-      app-region: no-drag;
-    }
+        ::-webkit-scrollbar-corner {
+            background: #202020;
+        }
 
-    .title-left,
-    .title-btn {
-      display: flex;
-      flex-direction: row;
-    }
+        /*基础*/
+        * {
+            user-select: none;
+            box-sizing: border-box;
+        }
 
-    #title-text {
-      height: 28px;
-      margin-left:4px;
-      line-height: 28px;
-      font-size: 1.2em;
-      font-weight: bold;
+        body {
+            margin: 0px;
+        }
 
-    }
+        /*标题栏*/
+        .title-bar {
+            background-color: white;
+            width: 100%;
+            height: 28px;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            app-region: drag;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
 
-    .btn-icon {
-      width: 36px;
-      height: 28px;
-      transition: all 0.2s;
-      background-color: transparent;
-      background-size: 70%, 70%, contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
+        .title-btn {
+            app-region: no-drag;
+        }
 
-    .btn-icon:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
+        .title-left,
+        .title-btn {
+            display: flex;
+            flex-direction: row;
+        }
 
-    .btn-icon:active {
-      background-color: rgba(0, 0, 0, 0.4);
-    }
+        #title-text {
+            height: 28px;
+            margin-left: 4px;
+            line-height: 28px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
 
-    #btn-close:hover {
-      background-color: #ff5f56;
-    }
+        .btn-icon {
+            width: 36px;
+            height: 28px;
+            transition: all 0.2s;
+            background-color: transparent;
+            background-size: 70%, 70%, contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
-    #btn-close:active {
-      background-color: #e0443e;
-    }
+        .btn-icon:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
 
-    /*������*/
-    #float-layer {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0px;
-      left: 0px;
-      display: none;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 100;
-    }
+        .btn-icon:active {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        #btn-close:hover {
+            background-color: #ff5f56;
+        }
+
+        #btn-close:active {
+            background-color: #e0443e;
+        }
+
+        #settings-area {
+            height: calc(100vh - 28px);
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .settings-block {
+            height: 100%;
+            width: 100vw;
+            display: flex;
+        }
+
+        .settings-item {
+            height: 40px;
+            width: 100%;
+            display: flex;
+
+            &>.item-left {
+                display: flex;
+                flex-direction: column;
+
+                &>.item-title {
+                    line-height: 24px;
+                }
+
+                &>.item-description {
+                    line-height: 16px;
+                }
+            }
+
+            &>.item-right {
+                vertical-align: middle;
+            }
+        }
+
+        #btn-back {
+            position: fixed;
+            top: 28px;
+            left: 0px;
+            transition: all 0.15s;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+            display: none;
+            align-items: center;
+            height: 100%;
+
+            &:hover {
+                background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
+            }
+        }
 
 
-  </style>
+        .back-icon {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTI0IDB2MjRIMFYwaDI0eiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iLjg3Ii8+PHBhdGggZD0iTTE4LjQxIDE2LjU5TDEzLjgyIDEybDQuNTktNC41OUwxNyA2bC02IDYgNiA2IDEuNDEtMS40MXpNNiA2aDJ2MTJINlY2eiIvPjwvc3ZnPg==);
+            width: 10vw;
+            height: 10vw;
+            background-size: 70%, 70%, contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 
 <body>
-  <!--������-->
-  <div class="title-bar">
-    <div class="title-left">
-      <span id="title-text">��ȡ������...</span>
+    <!--标题栏-->
+    <div class="title-bar">
+        <div class="title-left">
+            <span id="title-text">初始化...</span>
+        </div>
+        <div class="title-btn">
+            <div class="btn-icon" id="btn-close" onclick="chrome.webview.hostObjects.PreferenceBridge.Close()"
+                style="background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMiAxOSA2LjQxeiIvPjwvc3ZnPg==)">
+            </div>
+        </div>
     </div>
-    <div class="title-btn">
-      <div class="btn-icon" id="btn-close" onclick="chrome.webview.hostObjects.PreferenceBridge.Close()"
-        style="background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMiAxOSA2LjQxeiIvPjwvc3ZnPg==)"></div>
+    <!--设置区域-->
+    <div id="settings-area">
     </div>
-  </div>
+    <div id="btn-back">
+        <div class="back-icon">
+        </div>
+    </div>
+    <script>
+        (async () => {
+            const config = JSON.parse(await chrome.webview.hostObjects.PreferenceBridge.ReadConfig());
+            let current_preference = JSON.parse(await chrome.webview.hostObjects.PreferenceBridge.ReadPreference());
+            //存储每一层设置块
+            let blocks = [];
+            const create_block = list => {
+                //获取当前应处理的层
+                const level = blocks.length;
+                //创建设置块
+                let block = document.createElement("div");
+                block.className = "settings-block";
+                block.setAttribute("level", level);
+                //添加设置项
+                list.forEach(ele => {
+                    let item = document.createElement("div");
+                    item.className = "settings-item";
+                    let left = document.createElement("div");
+                    left.className = "item-left";
+                    let title = document.createElement("span");
+                    title.className = "item-title";
+                    title.innerText = ele.name;
+                    left.appendChild(title);
+                    let description = document.createElement("span");
+                    description.className = "item-description";
+                    description.innerText = ele.description;
+                    left.appendChild(description);
+                    item.appendChild(left);
+                    let right = document.createElement("div");
+                    switch (ele.type) {
+                        //子页面
+                        case "sub": {
+                            break;
+                        }
+                        //布尔型
+                        case "bool": {
+                            break;
+                        }
+                        //字符串
+                        case "string": {
+                            break;
+                        }
+                        //数字
+                        case "number": {
+                            break;
+                        }
+                        //链接
+                        case "link": {
+                            break;
+                        }
+                        //默认，当前版本不受支持的项目
+                        default: {
+                            break;
+                        }
+                    }
+                })
+                //添加设置块
+                document.getElementById("settings-area").insertAdjacentElement("afterbegin", block);
+                blocks.push(block);
+                //根据设置块数量设置宽度和返回按钮显示
+                blocks.forEach(block => {
+                    switch (blocks.length) {
+                        case 1: {
+                            block.style.width = "100vw";
+                            document.getElementById("btn-back").display = "none";
+                            break;
+                        }
+                        case 2: {
+                            block.style.width = "50vw";
+                            document.getElementById("btn-back").display = "none";
+                            break;
+                        }
+                        default: {
+                            block.style.width = "45vw";
+                            document.getElementById("btn-back").display = "flex";
+                            break;
+                        }
+                    }
+                })
+            }
+            create_block(config.Settings);
+            document.getElementById("btn-back").addEventListener("click", () => {
+                document.getElementById("settings-area").removeChild(blocks.pop());
+            })
+        })
+    </script>
 </body>
 
 </html>

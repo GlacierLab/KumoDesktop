@@ -60,10 +60,20 @@ namespace KumoNEXT.AppCore
         {
             await WebView.EnsureCoreWebView2Async(App.WebView2Environment).ConfigureAwait(true);
             WebView.CoreWebView2.AddHostObjectToScript("PreferenceBridge", new PreferenceBridge(this));
+            WebView.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
+            WebView.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
+            WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
+            WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
+            if (App.MainConfig.EnableDebug == false)
+            {
+                WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+            }
+            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference); 
             WebView.CoreWebView2.OpenDevToolsWindow();
         }
 
+        //同步设置后再关闭窗口
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
