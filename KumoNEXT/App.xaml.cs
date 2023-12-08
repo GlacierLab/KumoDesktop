@@ -34,7 +34,7 @@ namespace KumoNEXT
             }
             else
             {
-                var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox";
+                var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox --single-process --enable-low-end-device-mode";
                 CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
                 {
                     AdditionalBrowserArguments = WebviewArgu
