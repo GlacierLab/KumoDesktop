@@ -70,7 +70,7 @@ namespace KumoNEXT.AppCore
             }
             WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference); 
-            WebView.CoreWebView2.OpenDevToolsWindow();
+            //WebView.CoreWebView2.OpenDevToolsWindow();
         }
 
 
@@ -84,6 +84,7 @@ namespace KumoNEXT.AppCore
                 e.Cancel= true;
                 WebView.CoreWebView2.ExecuteScriptAsync("Callback.SaveClose();");
             }
+            WebView.Dispose();
         }
 
 
