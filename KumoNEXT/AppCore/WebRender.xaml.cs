@@ -206,6 +206,7 @@ namespace KumoNEXT.AppCore
         bool ReadyToExit = false;
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             //触发WebView关闭回调，只有WebView可以发起主动关闭
             if (!ExitFromBridge)
             {

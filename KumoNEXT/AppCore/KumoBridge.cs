@@ -31,8 +31,11 @@ namespace KumoNEXT.AppCore
         //[]关闭窗口，无返回
         public void Window_Close()
         {
-            CurrentWindow.ExitFromBridge = true;
-            CurrentWindow.Close();
+            if (PreferenceWindowOpened == null)
+            {
+                CurrentWindow.ExitFromBridge = true;
+                CurrentWindow.Close();
+            }
         }
         //[]设置窗口大小，返回设置后的大小
         public int[] Window_Size(int Width, int Height)
