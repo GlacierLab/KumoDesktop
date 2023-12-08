@@ -1,8 +1,10 @@
 ﻿using KumoNEXT.Scheme;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -54,6 +56,30 @@ namespace KumoNEXT.AppCore
         public void WriteConsole(string message) 
         { 
             Console.WriteLine(message);
+        }
+
+        //浏览器内打开，无头模式下不可用
+        public void OpenLink(string url)
+        {
+            if (Window != null)
+            {
+                ProcessStartInfo startInfo = new(url);
+                startInfo.UseShellExecute = true;
+                Process.Start(startInfo);
+            }
+        }
+
+        //获取显示名称，无头模式下不可用
+        public string GetDisplayName()
+        {
+            if (Window != null)
+            {
+                return Window.ParsedManifest.DisplayName;
+            }
+            else
+            {
+                return "";
+            }
         }
 
         //读取配置文件
