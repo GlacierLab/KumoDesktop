@@ -225,15 +225,7 @@ namespace KumoNEXT.AppCore
                         MinHeight = 30;
                         Height = 30;
                     }
-                    FileStream? createStream = null;
-                    if (File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
-                    {
-                        createStream = File.OpenWrite("PackageData\\" + ParsedManifest.Name + ".json");
-                    }
-                    else
-                    {
-                        createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
-                    }
+                    FileStream createStream = createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
                     await JsonSerializer.SerializeAsync(createStream, ParsedLocalData);
                     await createStream.DisposeAsync();
                     WebView.Dispose();

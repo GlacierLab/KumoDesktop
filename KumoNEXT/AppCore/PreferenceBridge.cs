@@ -111,7 +111,7 @@ namespace KumoNEXT.AppCore
                 ReadPreference();
             }
             ParsedLocalData.PreferenceSaved = message;
-            FileStream createStream = File.OpenWrite("PackageData\\" + PkgName + ".json");
+            FileStream createStream = File.Create("PackageData\\" + PkgName + ".json");
             JsonSerializer.Serialize(createStream, ParsedLocalData);
             createStream.Dispose();
             if (Window != null)
