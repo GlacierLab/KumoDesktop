@@ -113,18 +113,20 @@
         }
 
         .settings-block {
+            overflow-y: scroll;
+            overflow-x: hidden;
             direction: ltr;
             height: 100%;
             width: 100vw;
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            box-sizing: content-box;
             border-right: 1px solid rgba(0, 0, 0, 0.5);
         }
 
         .settings-item {
-            height: 50px;
+            height: auto;
+            min-height: 50px;
             width: 100%;
             display: flex;
             padding: 5px;
@@ -150,11 +152,12 @@
                 &>.item-description {
                     line-height: 16px;
                     font-weight: lighter;
-                    font-size: 0.875rem;
+                    font-size: 0.8rem;
                 }
             }
 
             &>.item-right {
+                max-width: 50%;
                 vertical-align: middle;
                 min-width: 40px;
                 background-color: transparent;
@@ -189,6 +192,88 @@
             background-position: center;
             transform: rotate(180deg);
         }
+
+
+        /*勾选，来自https://moderncss.dev/pure-css-custom-checkbox-style/   */
+        :root {
+            --form-control-color: rgb(0, 0, 0);
+            --form-control-disabled: #959495;
+        }
+
+        input[type="checkbox"] {
+            /* Add if not using autoprefixer */
+            -webkit-appearance: none;
+            /* Remove most all native input styles */
+            appearance: none;
+            /* For iOS < 15 */
+            background-color: var(--form-background);
+            /* Not removed via appearance */
+            margin: 6px;
+
+            font: inherit;
+            color: currentColor;
+            width: 28px;
+            height: 28px;
+            border: 0.15em solid currentColor;
+            border-radius: 0.15em;
+            transform: translateY(-0.075em);
+
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            transform: scale(0);
+            transform-origin: bottom left;
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color);
+            /* Windows High Contrast Mode */
+            background-color: CanvasText;
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        input[type="checkbox"]:focus {
+            outline: max(2px, 0.15em) solid currentColor;
+            outline-offset: max(2px, 0.15em);
+        }
+
+        input[type="checkbox"]:disabled {
+            --form-control-color: var(--form-control-disabled);
+
+            color: var(--form-control-disabled);
+            cursor: not-allowed;
+        }
+
+        /*输入*/
+        input:not([type="checkbox"]) {
+            background-color: transparent;
+            height: 40px;
+            width: 100%;
+            font-size: 1.1em;
+            padding: 6.5px;
+            border: none;
+            border-bottom: 1px solid #777777;
+            outline: none;
+        }
+
+        input:not([type="checkbox"]):focus-visible {
+            border-bottom: 2px solid #35f39a !important;
+        }
+
+        input:not([type="checkbox"]):hover {
+            border-bottom: 1.5px solid #333333;
+        }
+
+        input:not([type="checkbox"]):active {
+            border-bottom: 2px solid #35f39a !important;
+        }
     </style>
 </head>
 
@@ -199,7 +284,7 @@
             <span id="title-text">加载设置中...</span>
         </div>
         <div class="title-btn">
-            <div class="btn-icon" id="btn-close" onclick="chrome.webview.hostObjects.PreferenceBridge.Close()"
+            <div class="btn-icon" id="btn-close"
                 style="background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMiAxOSA2LjQxeiIvPjwvc3ZnPg==)">
             </div>
         </div>
@@ -272,6 +357,7 @@
                             let right = document.createElement("div");
                             right.className = "item-right";
                             right.style.backgroundImage = "url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0cHgiIGZpbGw9IiMwMDAwMDAiPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCIvPjwvZz48Zz48Zz48cG9seWdvbiBwb2ludHM9IjE1LjUsNSAxMSw1IDE2LDEyIDExLDE5IDE1LjUsMTkgMjAuNSwxMiIvPjxwb2x5Z29uIHBvaW50cz0iOC41LDUgNCw1IDksMTIgNCwxOSA4LjUsMTkgMTMuNSwxMiIvPjwvZz48L2c+PC9zdmc+)"
+                            right.style.opacity = 0.5;
                             item.appendChild(right);
                             item.addEventListener("click", () => {
                                 create_block(ele.child, level + 1);
@@ -280,14 +366,58 @@
                         }
                         //布尔型
                         case "bool": {
+                            let right = document.createElement("div");
+                            right.className = "item-right";
+                            let checkbox = document.createElement("input");
+                            checkbox.type = "checkbox";
+                            checkbox.checked = current_preference[ele.key];
+                            checkbox.addEventListener("change", e => {
+                                current_preference[ele.key] = checkbox.checked;
+                            })
+                            right.appendChild(checkbox);
+                            item.appendChild(right);
+                            item.addEventListener("click", e => {
+                                if (e.target != checkbox) {
+                                    checkbox.checked = !checkbox.checked;
+                                };
+                                current_preference[ele.key] = checkbox.checked;
+                            }, true)
                             break;
                         }
                         //字符串
                         case "string": {
+                            let right = document.createElement("div");
+                            right.className = "item-right";
+                            let input = document.createElement("input");
+                            input.type = "text";
+                            input.value = current_preference[ele.key];
+                            input.addEventListener("change", () => {
+                                current_preference[ele.key] = input.value;
+                            })
+                            right.appendChild(input);
+                            item.appendChild(right);
+                            item.addEventListener("click", e => {
+                                e.stopPropagation();
+                                input.focus();
+                            }, true)
                             break;
                         }
                         //数字
                         case "number": {
+                            let right = document.createElement("div");
+                            right.className = "item-right";
+                            let input = document.createElement("input");
+                            input.type = "number";
+                            input.value = current_preference[ele.key];
+                            input.addEventListener("change", () => {
+                                current_preference[ele.key] = input.value;
+                            })
+                            right.appendChild(input);
+                            item.appendChild(right);
+                            item.addEventListener("click", e => {
+                                e.stopPropagation();
+                                input.focus();
+                            }, true)
                             break;
                         }
                         //链接
@@ -295,6 +425,7 @@
                             let right = document.createElement("div");
                             right.className = "item-right";
                             right.style.backgroundImage = "url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDE5SDVWNWg3VjNIM3YxOGgxOHYtOWgtMnY3ek0xNCAzdjJoMy41OWwtOS44MyA5LjgzIDEuNDEgMS40MUwxOSA2LjQxVjEwaDJWM2gtN3oiLz48L3N2Zz4=)"
+                            right.style.opacity = 0.5;
                             item.appendChild(right);
                             item.addEventListener("click", () => {
                                 chrome.webview.hostObjects.PreferenceBridge.OpenLink(ele.target);
@@ -317,6 +448,10 @@
             document.getElementById("btn-back").addEventListener("click", () => {
                 document.getElementById("settings-area").removeChild(blocks.pop());
                 adjust_blocks();
+            })
+            document.getElementById("btn-close").addEventListener("click", async () => {
+                await chrome.webview.hostObjects.PreferenceBridge.WritePreference(JSON.stringify(current_preference));
+                await chrome.webview.hostObjects.PreferenceBridge.Close();
             })
             window.Callback = {
                 SaveClose: async () => {

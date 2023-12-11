@@ -84,7 +84,10 @@ namespace KumoNEXT.AppCore
                 e.Cancel= true;
                 WebView.CoreWebView2.ExecuteScriptAsync("Callback.SaveClose();");
             }
-            WebView.Dispose();
+            else
+            {
+                WebView.Dispose();
+            }
         }
 
 
