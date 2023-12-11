@@ -219,7 +219,7 @@ namespace KumoNEXT
         }
         public static bool CheckInstall(string PkgName)
         {
-            bool Installed = Directory.Exists("Package\\" + PkgName.Replace(".", "\\"));
+            bool Installed = File.Exists("Package\\" + PkgName.Replace(".", "\\")+"\\manifest.json");
             Console.WriteLine("Check package:" + PkgName + " - " + Installed.ToString());
             return Installed;
         }
