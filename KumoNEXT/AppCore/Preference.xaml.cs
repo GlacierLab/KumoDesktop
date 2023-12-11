@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Taskbar;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -90,7 +91,12 @@ namespace KumoNEXT.AppCore
             }
         }
 
-
-
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
     }
 }
