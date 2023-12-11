@@ -113,7 +113,7 @@
         }
 
         .settings-block {
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
             direction: ltr;
             height: 100%;
@@ -122,6 +122,10 @@
             flex-direction: column;
             flex-shrink: 0;
             border-right: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        .sub-active {
+            background-color: rgba(0, 255, 140, 0.15);
         }
 
         .settings-item {
@@ -360,6 +364,8 @@
                             right.style.opacity = 0.5;
                             item.appendChild(right);
                             item.addEventListener("click", () => {
+                                item.parentElement.querySelectorAll(".sub-active").forEach(ele => { ele.className = "settings-item"; })
+                                item.className = "settings-item sub-active";
                                 create_block(ele.child, level + 1);
                             });
                             break;
