@@ -139,7 +139,7 @@ namespace KumoNEXT
                 Environment.Exit(0);
                 return;
             }
-#if DEBUG
+#if false
             //初始化IPC服务进程，目前暂不启用，后期会支持跨进程任务传递和后台任务
             ChangeProgress(70, "检查服务进程...");
             if (!File.Exists(@"\\.\pipe\KumoDesktop"))
@@ -147,7 +147,6 @@ namespace KumoNEXT
                 Process.Start(Environment.ProcessPath, "--type=service");
             }
             Service.ClientCore.Main();
-            await Task.Delay(200);
 #endif
         Launch:
             //初始化WebView组件
@@ -157,7 +156,6 @@ namespace KumoNEXT
 #endif
             new AppCore.WebRender(ParsedManifest).Show();
             ChangeProgress(100, "准备就绪");
-            await Task.Delay(100);
             this.Close();
         }
     }
