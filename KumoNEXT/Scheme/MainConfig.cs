@@ -16,15 +16,15 @@
         public string Server { get; set; } = "https://github.com/GlacierLab/KumoDesktopPackages/releases/download/";
 #if DEBUG
         //默认启动包名，即直接运行时启动的包
-        public string LaunchPkg { get; set; } = "CorePkg.TestPkg";
+        public string LaunchPkg { get; set; } = "CorePkg.Main";
         //核心包，只有这些包都已经安装的情况下才可以启动
-        public string[] RequirePkg { get; set; } = { "CorePkg.TestPkg" };
+        public string[] RequirePkg { get; set; } = { "CorePkg.Main" };
         //调试模式是否开启，只有开启情况下F12可以正常打开，右键默认菜单会显示
         //PWA窗体无论任何时候都可以打开F12，这是为了更符合浏览器的表现
         public bool EnableDebug { get; set; } = true;
 #else
         //默认启动包名，即直接运行时启动的包
-        public string LaunchPkg { get; set; } = "CorePkg.Main.UI";
+        public string LaunchPkg { get; set; } = "CorePkg.Main";
         //核心包，只有这些包都已经安装的情况下才可以启动
         public string[] RequirePkg { get; set; } = { "CorePkg.Main", "CorePkg.Main.Data", "CorePkg.Update" };
         //调试模式是否开启，只有开启情况下F12可以正常打开，右键默认菜单会显示

@@ -77,6 +77,10 @@ namespace KumoNEXT
             {
                 App.MainConfig = new Scheme.MainConfig();
             }
+            if (Argu.package == "Default")
+            {
+                Argu.package = App.MainConfig.LaunchPkg;
+            }
 #if DEBUG
             Console.WriteLine("Main Config:" + JsonSerializer.Serialize(App.MainConfig));
 #endif
