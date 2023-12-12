@@ -6,5 +6,10 @@
         {
             return TargetPkg.StartsWith(ContextPkg);
         }
+
+        public async static Task<bool> CheckAndRequestPermission(string ContextPkg, string Permission)
+        {
+            return false;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Interop;
@@ -120,8 +122,35 @@ namespace KumoNEXT.AppCore
         //[]获取已安装的子包，返回子包字符串数组
         public string[] Package_GetInstalledChildPackages()
         {
-            //TODO
-            return [];
+            var Packages = new List<string>();
+            foreach (var item in CurrentWindow.ParsedManifest.ChildPkg)
+            {
+                if (PackageManager.CheckInstall(item))
+                {
+                    Packages.Add(item);
+                }
+            }
+            return Packages.ToArray();
+        }
+
+
+        //Execute类方法，执行或打开文件或请求
+
+        //[?Execute]打开一个地址，传入地址，返回是否打开成功
+        //对于网页地址无需权限，其他地址例如Steam Scheme需要Execute权限
+        //该方法必须使用异步调用
+        public async Task<bool> Execute_OpenUrl(string url)
+        {
+            if (!url.StartsWith("http://")&&!url.StartsWith("https://"))
+            {
+                if (!await PermissionManager.CheckAndRequestPermission(CurrentWindow.ParsedManifest.Name, "Execute"))
+                {
+                    return false;
+                };
+            }
+            ProcessStartInfo startInfo = new(url);
+            startInfo.UseShellExecute = true;
+            return Process.Start(startInfo) != null;
         }
     }
 }
