@@ -41,7 +41,8 @@ namespace KumoNEXT
                 };
                 Directory.CreateDirectory(Environment.CurrentDirectory + @"\WebviewCache\App\");
                 WebView2Environment = await CoreWebView2Environment.CreateAsync(null, Environment.CurrentDirectory + "\\WebviewCache\\App\\", options);
-                WebView2Environment.BrowserProcessExited += (o,e)=> {
+                WebView2Environment.BrowserProcessExited += (o, e) =>
+                {
                     Console.WriteLine("WebView Environment Dead");
                     WebView2Environment = null;
                     InitAppWebView();

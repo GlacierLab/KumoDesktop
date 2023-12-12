@@ -1,22 +1,14 @@
-﻿using KumoNEXT.Scheme;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Media.TextFormatting;
 
 namespace KumoNEXT.AppCore
 {
     public class PreferenceBridge
     {
-        Preference? Window=null;
+        Preference? Window = null;
         string PkgName = "";
-        Scheme.PkgLocalData? ParsedLocalData=null;
+        Scheme.PkgLocalData? ParsedLocalData = null;
         bool Headless = false;
 
         public Action? Callback = null;
@@ -30,7 +22,7 @@ namespace KumoNEXT.AppCore
         //无头模式只需包名
         public PreferenceBridge(string Name)
         {
-            PkgName= Name;
+            PkgName = Name;
             Headless = true;
         }
 
@@ -46,15 +38,15 @@ namespace KumoNEXT.AppCore
         //收工信号，无头模式下触发即视为处理完成
         public void JobDone()
         {
-            if(Callback != null)
+            if (Callback != null)
             {
                 Callback();
             }
         }
 
         //输出到C#命令行 
-        public void WriteConsole(string message) 
-        { 
+        public void WriteConsole(string message)
+        {
             Console.WriteLine(message);
         }
 
@@ -85,7 +77,7 @@ namespace KumoNEXT.AppCore
         //读取配置文件
         public string ReadConfig()
         {
-            if(File.Exists("Package\\" + PkgName.Replace(".", "\\")+"\\config.json"))
+            if (File.Exists("Package\\" + PkgName.Replace(".", "\\") + "\\config.json"))
             {
                 return File.ReadAllText("Package\\" + PkgName.Replace(".", "\\") + "\\config.json");
             }

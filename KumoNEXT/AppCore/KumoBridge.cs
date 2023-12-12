@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.Policy;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Interop;
@@ -97,7 +96,7 @@ namespace KumoNEXT.AppCore
         private Preference? PreferenceWindowOpened = null;
         public void Kumo_OpenPreferenceWindow()
         {
-            if (PreferenceWindowOpened==null)
+            if (PreferenceWindowOpened == null)
             {
                 var PreferenceWindow = new Preference(CurrentWindow.ParsedManifest, ref CurrentWindow.ParsedLocalData);
                 PreferenceWindow.Closed += (o, e) =>
@@ -141,7 +140,7 @@ namespace KumoNEXT.AppCore
         //该方法必须使用异步调用
         public async Task<bool> Execute_OpenUrl(string url)
         {
-            if (!url.StartsWith("http://")&&!url.StartsWith("https://"))
+            if (!url.StartsWith("http://") && !url.StartsWith("https://"))
             {
                 if (!await PermissionManager.CheckAndRequestPermission(CurrentWindow.ParsedManifest.Name, "Execute"))
                 {

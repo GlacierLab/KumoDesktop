@@ -54,7 +54,7 @@ namespace KumoNEXT.AppCore
             AppID = "Kumo." + PkgManifest.Name + "." + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()[3..];
             Init(PkgManifest);
         }
-        public WebRender(Scheme.PkgManifest PkgManifest,string ID,string Entry)
+        public WebRender(Scheme.PkgManifest PkgManifest, string ID, string Entry)
         {
             AppID = ID;
             Init(PkgManifest);
@@ -75,14 +75,14 @@ namespace KumoNEXT.AppCore
             //读取配置文件
             try
             {
-                using Stream JsonStream=File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
+                using Stream JsonStream = File.OpenRead("PackageData\\" + ParsedManifest.Name + ".json");
                 {
                     ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(JsonStream);
                     JsonStream.Dispose();
                 }
             }
             catch (Exception)
-            {              
+            {
                 ParsedLocalData = new Scheme.PkgLocalData();
                 using FileStream createStream = File.Create("PackageData\\" + ParsedManifest.Name + ".json");
                 {
@@ -101,6 +101,8 @@ namespace KumoNEXT.AppCore
                 Height = ParsedManifest.Height;
                 Width = ParsedManifest.Width;
             }
+            MinHeight = ParsedManifest.MinHeight;
+            MinWidth = ParsedManifest.MinWidth;
             Title = ParsedManifest.DisplayName;
             if (ParsedManifest.AllowResize)
             {
@@ -202,7 +204,7 @@ namespace KumoNEXT.AppCore
             };
         }
 
-        public bool ExitFromBridge =false;
+        public bool ExitFromBridge = false;
         bool ReadyToExit = false;
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

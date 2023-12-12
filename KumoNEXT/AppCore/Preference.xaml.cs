@@ -1,11 +1,6 @@
-﻿using Microsoft.Web.WebView2.Core;
-using Microsoft.WindowsAPICodePack.Taskbar;
-using System.Diagnostics;
-using System.Drawing;
+﻿using Microsoft.WindowsAPICodePack.Taskbar;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,12 +18,12 @@ namespace KumoNEXT.AppCore
 
         public Preference(Scheme.PkgManifest Manifest, ref Scheme.PkgLocalData LocalData)
         {
-            InitializeComponent(); 
+            InitializeComponent();
             ParsedManifest = Manifest;
             ParsedLocalData[0] = LocalData;
             Title = "设置-" + Manifest.DisplayName;
             //渲染设置图标
-            var SettingsIcon=this.FindResource("settings") as DrawingImage; 
+            var SettingsIcon = this.FindResource("settings") as DrawingImage;
             DrawingVisual drawingVisual = new DrawingVisual();
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
             {
@@ -47,7 +42,7 @@ namespace KumoNEXT.AppCore
                     drawingContext.DrawImage(bitmap, new Rect(192, 192, 320, 320));
                 }
             }
-            RenderTargetBitmap bmp = new RenderTargetBitmap(512,512, 96, 96, PixelFormats.Pbgra32);
+            RenderTargetBitmap bmp = new RenderTargetBitmap(512, 512, 96, 96, PixelFormats.Pbgra32);
             bmp.Render(drawingVisual);
             Icon = bmp;
             //设置AppID
@@ -74,7 +69,7 @@ namespace KumoNEXT.AppCore
             {
                 e.MenuItems.RemoveAt(e.MenuItems.Count - 1);
             };
-            WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference); 
+            WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference);
         }
 
 
@@ -85,7 +80,7 @@ namespace KumoNEXT.AppCore
         {
             if (!ReadyToClose)
             {
-                e.Cancel= true;
+                e.Cancel = true;
                 WebView.CoreWebView2.ExecuteScriptAsync("Callback.SaveClose();");
             }
             else

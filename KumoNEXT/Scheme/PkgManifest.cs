@@ -52,6 +52,9 @@
         //默认窗口宽高
         public int Height { get; set; } = 450;
         public int Width { get; set; } = 800;
+        //最小窗口宽高
+        public int MinHeight { get; set; } = 200;
+        public int MinWidth { get; set; } = 400;
         //是否记忆窗口大小
         public bool SaveWindowSize { get; set; } = false;
 
