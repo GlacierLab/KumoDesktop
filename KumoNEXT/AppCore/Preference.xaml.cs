@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Taskbar;
+﻿using Microsoft.Web.WebView2.Core;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -69,9 +70,11 @@ namespace KumoNEXT.AppCore
             {
                 WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             }
-            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            WebView.CoreWebView2.ContextMenuRequested += (s, e) =>
+            {
+                e.MenuItems.RemoveAt(e.MenuItems.Count - 1);
+            };
             WebView.CoreWebView2.NavigateToString(Properties.Resources.Preference); 
-            //WebView.CoreWebView2.OpenDevToolsWindow();
         }
 
 

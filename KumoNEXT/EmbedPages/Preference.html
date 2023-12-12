@@ -303,6 +303,14 @@
         </div>
     </div>
     <script>
+        document.oncontextmenu = e => {
+            if (e.target.tagName != "INPUT") {
+                e.preventDefault();
+                return false;
+            } else {
+                return true;
+            }
+        }
         (async () => {
             const config = JSON.parse(await chrome.webview.hostObjects.PreferenceBridge.ReadConfig());
             let current_preference = JSON.parse(await chrome.webview.hostObjects.PreferenceBridge.ReadPreference());

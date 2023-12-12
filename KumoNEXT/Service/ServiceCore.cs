@@ -29,7 +29,7 @@ namespace KumoNEXT.Service
                 Console.WriteLine("Error: {0}", e.Message);
             }
             //新建线程等待新连接
-            new Thread(ServerThread).Start();
+            //new Thread(ServerThread).Start();
             pipeServer.Close();
             ActiveThreads--;
             new Thread(CheckAutoExit).Start();
