@@ -158,6 +158,23 @@ namespace KumoNEXT
                 return -400;
             }
             Directory.CreateDirectory("PackageData");
+            //安装依赖包
+            if (ParsedManifest.Dependency.Length > 0)
+            {
+                foreach (var pkg in ParsedManifest.Dependency)
+                {
+                    if (!await EnsureInstall(pkg))
+                    {
+                        //-401依赖包无法安装
+                        if (Callback != null)
+                        {
+                            CallbackValue.Progress = -401;
+                            Callback(CallbackValue);
+                        }
+                        return -401;
+                    };
+                }
+            }
             //建立存档
             if (!File.Exists("PackageData\\" + ParsedManifest.Name + ".json"))
             {
