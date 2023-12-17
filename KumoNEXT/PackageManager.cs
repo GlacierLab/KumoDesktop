@@ -166,7 +166,10 @@ namespace KumoNEXT
                 await createStream.DisposeAsync();
             }
             //升级配置文件
-            await UpgradeConfig(ParsedManifest.Name);
+            if (File.Exists("Package\\" + ParsedManifest.Name.Replace(".", "\\") + "\\config.json"))
+            {
+                await UpgradeConfig(ParsedManifest.Name);
+            }
             //解压到目录
             Directory.CreateDirectory("Package\\" + ParsedManifest.Path);
             await Task.Run(() => PackageFile.ExtractToDirectory("Package\\" + ParsedManifest.Path, true));
