@@ -34,6 +34,8 @@
         public string[] Permissions { get; set; } = { };
         //依赖包名，安装依赖包后再安装此包
         public string[] Dependency { get; set; } = { };
+        //父包名，需要同时填写在依赖里，本项仅限子包填写
+        public string ParentPkg = "SELF";
         //扩展子包，仅本名单内的扩展包允许安装文件到目录下
         public string[] ChildPkg { get; set; } = { };
         //安装路径
