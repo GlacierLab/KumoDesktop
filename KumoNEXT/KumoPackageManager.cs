@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace KumoNEXT
 {
-    class PackageManager
+    class KumoPackageManager
     {
         public async static Task<int> InstallFromOfficial(string PkgName, Action<Scheme.PackageManagerInstallCallback>? Callback = null)
         {

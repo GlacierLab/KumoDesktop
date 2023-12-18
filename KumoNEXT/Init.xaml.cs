@@ -22,7 +22,7 @@ namespace KumoNEXT
         }
         private async Task<bool> EnsurePackage(string Name)
         {
-            if (!await PackageManager.EnsureInstall(Name))
+            if (!await KumoPackageManager.EnsureInstall(Name))
             {
                 var result = MessageBox.Show("安装" + Name + "时遇到错误，是否重试？跳过此包体可能导致程序运行异常", "包体缺失", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
@@ -86,7 +86,7 @@ namespace KumoNEXT
             //检查是否存在必要的包
             ChangeProgress(10, "准备核心包体...");
 #if RELEASE
-            if (PackageManager.CheckInstall("CorePkg.Update"))
+            if (KumoPackageManager.CheckInstall("CorePkg.Update"))
             {
 
             }

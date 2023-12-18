@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
+using Windows.Management.Deployment;
 
 namespace KumoNEXT
 {
@@ -54,6 +55,7 @@ namespace KumoNEXT
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public void InitializeComponent(params string[] Args)
         {
+            Task.Run(Utils.WindowsPackageHelper.CacheWindowsPackages);
             //解析参数
             ParsedArgu = new Scheme.LaunchArgu();
             Array.ForEach(Args, (string argu) =>

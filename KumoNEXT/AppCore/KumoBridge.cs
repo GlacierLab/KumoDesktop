@@ -124,7 +124,7 @@ namespace KumoNEXT.AppCore
             var Packages = new List<string>();
             foreach (var item in CurrentWindow.ParsedManifest.ChildPkg)
             {
-                if (PackageManager.CheckInstall(item))
+                if (KumoPackageManager.CheckInstall(item))
                 {
                     Packages.Add(item);
                 }
