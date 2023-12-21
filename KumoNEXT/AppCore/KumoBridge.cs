@@ -11,9 +11,11 @@ namespace KumoNEXT.AppCore
     public class KumoBridge
     {
         WebRender CurrentWindow;
+        PermissionManager PermissionManager;
         public KumoBridge(WebRender Window)
         {
             CurrentWindow = Window;
+            PermissionManager = new PermissionManager(ref Window.ParsedLocalData);
         }
 
         //Window类方法，控制基本的窗口状态
