@@ -149,9 +149,7 @@ namespace KumoNEXT.AppCore
                     return false;
                 };
             }
-            ProcessStartInfo startInfo = new(url);
-            startInfo.UseShellExecute = true;
-            return Process.Start(startInfo) != null;
+            return await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
         }
     }
 }
