@@ -61,6 +61,7 @@ namespace KumoNEXT.AppCore
             WebView.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
             WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
             WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
+            WebView.CoreWebView2.Settings.IsStatusBarEnabled = false;
             if (App.MainConfig.EnableDebug == false)
             {
                 WebView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
