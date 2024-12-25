@@ -52,7 +52,9 @@ namespace KumoNEXT
             {
                 try
                 {
-                    ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(File.OpenRead("PackageData\\" + PkgName + ".json"));
+                    Stream FileStream =File.OpenRead("PackageData\\" + PkgName + ".json");
+                    ParsedLocalData = JsonSerializer.Deserialize<Scheme.PkgLocalData>(FileStream);
+                    FileStream.Close();
                 }
                 catch (Exception)
                 {
