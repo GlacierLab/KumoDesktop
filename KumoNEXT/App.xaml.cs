@@ -36,7 +36,7 @@ namespace KumoNEXT
             else
             {
                 var WebviewArgu = "--disable-features=msSmartScreenProtection,ElasticOverscroll --enable-features=msWebView2EnableDraggableRegions --in-process-gpu --disable-web-security --no-sandbox --single-process";
-                CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions()
+                CoreWebView2EnvironmentOptions options = new()
                 {
                     AdditionalBrowserArguments = WebviewArgu
                 };
@@ -55,7 +55,7 @@ namespace KumoNEXT
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public void InitializeComponent(params string[] Args)
         {
-            Task.Run(Utils.WindowsPackageHelper.CacheWindowsPackages);
+            //Task.Run(Utils.WindowsPackageHelper.CacheWindowsPackages);
             //解析参数
             ParsedArgu = new Scheme.LaunchArgu();
             Array.ForEach(Args, (string argu) =>
@@ -64,10 +64,7 @@ namespace KumoNEXT
                 {
                     string[] parsed = argu.Substring(2).Split("=");
                     PropertyInfo? entry = ParsedArgu.GetType().GetProperty(parsed[0]);
-                    if (entry != null)
-                    {
-                        entry.SetValue(ParsedArgu, parsed[1]);
-                    }
+                    entry?.SetValue(ParsedArgu, parsed[1]);
                 }
             });
 #if DEBUG
@@ -109,7 +106,7 @@ namespace KumoNEXT
         }
         static string GetExceptionMsg(Exception ex, string backStr)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("***************************************************************");
             sb.AppendLine("************************似乎哪里有点不对劲************************");
             sb.AppendLine("[时间]：" + DateTime.Now.ToString());

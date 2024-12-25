@@ -53,7 +53,7 @@
                     <fa:IconBlock Icon="WindowMaximize" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="Close" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}"  BorderThickness="0,0,0,0" Click="Close_Click">
+            <Button x:Name="CloseBtn" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}"  BorderThickness="0,0,0,0" Click="Close_Click">
                 <Button.Content>
                     <fa:IconBlock Icon="Xmark" Foreground="Black" Width="16" Height="16" FontSize="16"/>
                 </Button.Content>
