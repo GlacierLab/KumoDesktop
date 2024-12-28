@@ -151,5 +151,14 @@ namespace KumoNEXT.AppCore
             }
             return await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
         }
+
+
+        //Process类方法，进程管理相关
+
+        //[Process]检索指定名称进程是否正在运行，如果运行，返回一个进程列表
+        public BridgeModel.ProcessModel[] Process_QueryByName(string name)
+        {
+            return [.. Process.GetProcessesByName(name).ToList().ConvertAll<BridgeModel.ProcessModel>(Proc => new BridgeModel.ProcessModel(Proc))];
+        }
     }
 }
