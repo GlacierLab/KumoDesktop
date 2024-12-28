@@ -32,6 +32,8 @@
         public bool EnableDebug { get; set; } = false;
 #endif
 
+        //权限管理器，禁用时所有权限均默认同意，非定制包情况下不建议禁用
+        public bool EnablePermissionManager = true;
         //调试模式组件包名，此包无需授权即可调用特权API
         public string DebugPkg { get; set; } = "CorePkg.Debug";
     }

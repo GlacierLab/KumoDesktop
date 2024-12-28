@@ -14,6 +14,11 @@
 
         public async  Task<bool> CheckAndRequestPermission(string ContextPkg, string Permission)
         {
+            //权限管理器已禁用
+            if (!App.MainConfig.EnablePermissionManager)
+            {
+                return true;
+            }
             //先检查白名单
             string[] Permissions;
             if (PermissionWhitelist.TryGetValue(ContextPkg, out Permissions))
